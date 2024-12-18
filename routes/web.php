@@ -19,8 +19,25 @@ use App\Http\Controllers\BientheController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Client.home');
 });
+
+Route::get('/shop', function () {
+    return view('Client.shop');
+});
+Route::get('/contact', function () {
+    return view('Client.contact');
+});
+Route::get('/cart', function () {
+    return view('Client.cart');
+});
+Route::get('/thankyou', function () {
+    return view('Client.thankyou');
+});
+Route::get('/checkout', function () {
+    return view('Client.checkout');
+});
+
 Route::resource('/admin/category',CategoryController::class);
 Route::get('/category/bin',[CategoryController::class,'bin'])->name('category.bin');
 Route::get('category/restore/{id}',[CategoryController::class,'restore'])->name('category.restore');
@@ -44,3 +61,6 @@ Route::get('/admin/warehouse/edit/{id}',[BientheController::class,'edit'])->name
 Route::delete('/admin/warehouse/destroy/{id}',[BientheController::class,'destroy'])->name('warehouse.destroy');
 
 Route::resource('/admin/order',OrderController::class);
+
+
+
