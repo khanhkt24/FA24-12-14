@@ -1,17 +1,23 @@
-<title>Shoppers &mdash; Colorlib e-Commerce Template</title>
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>EShopper - Bootstrap Shop Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
-    <link rel="stylesheet" href="client/fonts/icomoon/style.css">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
 
-    <link rel="stylesheet" href="client/css/bootstrap.min.css">
-    <link rel="stylesheet" href="client/css/magnific-popup.css">
-    <link rel="stylesheet" href="client/css/jquery-ui.css">
-    <link rel="stylesheet" href="client/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="client/css/owl.theme.default.min.css">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="client/css/aos.css">
+    <!-- Libraries Stylesheet -->
+    <link href="client/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="client/css/style.css">
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="client/css/style.css" rel="stylesheet">
+</head>

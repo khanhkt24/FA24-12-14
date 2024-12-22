@@ -14,6 +14,7 @@ class Category extends Model
         'name'
     ];
     protected $dates = ['deleted_at'];
+    
     public function tag()
     {
         return $this->hasMany(Tag::class);
