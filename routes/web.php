@@ -38,6 +38,8 @@ Route::get('/checkout', function () {
     return view('Client.checkout');
 });
 
+
+
 Route::resource('/admin/category',CategoryController::class);
 Route::get('/category/bin',[CategoryController::class,'bin'])->name('category.bin');
 Route::get('category/restore/{id}',[CategoryController::class,'restore'])->name('category.restore');

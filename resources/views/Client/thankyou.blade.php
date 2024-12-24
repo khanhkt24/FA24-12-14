@@ -1,4 +1,4 @@
-@extends('Client.layouts.patials.master')
+@extends('Client.layouts.masterlayout')
 
 @section('content')
     <!-- Categories Start -->
