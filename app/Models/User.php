@@ -17,8 +17,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    const TYPE_1 = "ADMIN";
-    const TYPE_2 = "MEMBER";
+    const TYPE_ADMIN = "admin";
+    const TYPE_MEMBER = "member";
     protected $fillable = [
         'name',
         'email',
@@ -44,4 +44,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function isAdmin(){
+        return $this->type == self::TYPE_ADMIN;
+    }
+
+    public function isMember(){
+        return $this->type == self::TYPE_MEMBER;
+    }
 }
