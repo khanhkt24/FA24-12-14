@@ -7,6 +7,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BientheController;
+use App\Http\Controllers\Home\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,11 @@ use App\Http\Controllers\BientheController;
 |
 */
 
-Route::get('/', function () {
-    return view('Client.home');
-});
+Route::get('/',[HomeController::class, 'index']);
+
+// Route::get('/', function () {
+//     return view('Client.layouts.master');
+// });
 
 Route::get('/shop', function () {
     return view('Client.shop');
@@ -73,4 +76,11 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::resource('/admin/order', OrderController::class);
 
 });
+
+
+// $cats = Category::orderBy('name','ASC')->get();
+// $products = Product::orderBy('id','DESC')->limit(6)->get();
+// return view('Client.master',compact('cats','products'));
+// Route::get('/user/cat',[HomeController::class, 'cat'])->name('cate');
+
 
