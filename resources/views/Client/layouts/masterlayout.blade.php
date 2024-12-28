@@ -70,7 +70,7 @@
 
 
     <!-- Navbar Start -->
-    @include('Client.layouts.patials.navbarclient')
+    @include('Client.layouts.patials.navbarclient',$cats)
 
     <!-- Navbar End -->
 

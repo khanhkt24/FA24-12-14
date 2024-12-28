@@ -20,27 +20,36 @@ use App\Http\Controllers\Home\HomeController;
 |
 */
 
-Route::get('/',[HomeController::class, 'index']);
+Route::get('/',[HomeController::class, 'index'])->name('client.home');
 
 // Route::get('/', function () {
 //     return view('Client.layouts.master');
 // });
 
-Route::get('/shop', function () {
-    return view('Client.shop');
-});
+// Route::get('/shop', function () {
+//     return view('Client.shop');
+// });
+
+Route::get('/shop',[HomeController::class, 'indexLayout'])->name('client.shop');
+Route::get('/product/{product}',[HomeController::class, 'product'])->name('client.detail');
+
 Route::get('/contact', function () {
     return view('Client.contact');
 });
+
 Route::get('/cart', function () {
     return view('Client.cart');
 });
-Route::get('/thankyou', function () {
-    return view('Client.thankyou');
-});
+
 Route::get('/checkout', function () {
     return view('Client.checkout');
 });
+
+Route::get('/thankyou', function () {
+    return view('Client.thankyou');
+});
+
+
 
 Route::get('/admin/login',[AdminController::class, 'login'])->name('admin.login');
 Route::post('/admin/login',[AdminController::class, 'check_login']);

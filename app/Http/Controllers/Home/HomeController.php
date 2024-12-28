@@ -16,9 +16,15 @@ class HomeController extends Controller
         return view('Client.home', compact('cats', 'products'));
     }
 
-    public function cat()
+    public function indexLayout()
     {
         $cats = Category::orderBy('name', 'ASC')->get();
-        return view('Client.layouts.patials.navbar', compact('cats'));
+        $products = Product::orderBy('id', 'DESC')->paginate(1);
+        return view('Client.shop', compact('cats', 'products'));
     }
+
+    Public function product(Product $product){
+        return view('Client.detail',compact('product'));
+    }
+
 }
