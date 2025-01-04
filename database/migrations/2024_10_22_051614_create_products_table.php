@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('cost');
             $table->foreignIdFor(Tag::class)->constrained();
             $table->foreignIdFor(Category::class)->constrained();
-            $table->string('sale');
+            $table->string('sale')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

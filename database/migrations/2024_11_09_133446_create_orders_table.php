@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Customer;
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignIdFor(Customer::class);
+
             $table->string('email');
             $table->string('phone');
             $table->string('address');
@@ -21,6 +24,7 @@ return new class extends Migration
             $table->timestamp('ngaydathang');
             $table->string('giaohang')->default(App\Models\Order::TYPE_1);
             $table->string('thanhtoan');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

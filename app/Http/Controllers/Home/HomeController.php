@@ -23,8 +23,11 @@ class HomeController extends Controller
         return view('Client.shop', compact('cats', 'products'));
     }
 
-    Public function product(Product $product){
-        return view('Client.detail',compact('product'));
+    Public function product(String $id){
+
+        $cats = Category::orderBy('name', 'ASC')->get();
+        $product = Product::with('bienthe')->findOrFail($id);
+        return view('Client.detail',compact('product','cats'));
     }
 
 }

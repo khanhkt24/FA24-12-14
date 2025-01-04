@@ -7,6 +7,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BientheController;
+use App\Http\Controllers\Home\AcountController;
 use App\Http\Controllers\Home\HomeController;
 
 /*
@@ -21,21 +22,9 @@ use App\Http\Controllers\Home\HomeController;
 */
 
 Route::get('/',[HomeController::class, 'index'])->name('client.home');
-
-// Route::get('/', function () {
-//     return view('Client.layouts.master');
-// });
-
-// Route::get('/shop', function () {
-//     return view('Client.shop');
-// });
-
 Route::get('/shop',[HomeController::class, 'indexLayout'])->name('client.shop');
-Route::get('/product/{product}',[HomeController::class, 'product'])->name('client.detail');
+Route::get('/product/{id}',[HomeController::class, 'product'])->name('client.detail');
 
-Route::get('/contact', function () {
-    return view('Client.contact');
-});
 
 Route::get('/cart', function () {
     return view('Client.cart');
@@ -49,6 +38,31 @@ Route::get('/thankyou', function () {
     return view('Client.thankyou');
 });
 
+// Route::get('/send-test-email', [AcountController::class, 'sendTestEmail']);
+Route::group(['prefix'=>'acount'], function(){
+
+    Route::get('/login',[AcountController::class, 'login'])->name('acount.login');
+    Route::get('/verify-acount/{email}',[AcountController::class, 'verify'])->name('acount.verify');
+
+    Route::post('/login',[AcountController::class, 'check_login']);
+
+    Route::get('/register',[AcountController::class, 'register'])->name('acount.register');
+    Route::post('/register',[AcountController::class, 'check_register']);
+
+    Route::get('/profile',[AcountController::class, 'profile'])->name('acount.profile');
+    Route::post('/profile',[AcountController::class, 'check_profile']);
+
+    Route::get('/change_password',[AcountController::class, 'change_password'])->name('acount.change_password');
+    Route::post('/change_password',[AcountController::class, 'check_change_password']);
+
+    Route::get('/forgot_password',[AcountController::class, 'forgot_password'])->name('acount.forgot_password');
+    Route::post('/forgot_password',[AcountController::class, 'check_forgot_password']);
+
+
+    Route::get('/reset_password',[AcountController::class, 'reset_password'])->name('acount.reset_password');
+    Route::post('/reset_password',[AcountController::class, 'check_reset_password']);
+
+});
 
 
 Route::get('/admin/login',[AdminController::class, 'login'])->name('admin.login');

@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['name','img','description','category_id','tag_id','cost','deleted_at'];
+    protected $fillable = ['name','img','description','category_id','tag_id','cost','deleted_at','sale'];
     protected $dates = ['deleted_at'];
     public function bienthe()
     {
