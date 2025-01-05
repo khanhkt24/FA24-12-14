@@ -7,8 +7,11 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BientheController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Home\AcountController;
 use App\Http\Controllers\Home\HomeController;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,25 +23,21 @@ use App\Http\Controllers\Home\HomeController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+/////////////////////                              HOME                           //////////////////////////////////
 Route::get('/',[HomeController::class, 'index'])->name('client.home');
 Route::get('/shop',[HomeController::class, 'indexLayout'])->name('client.shop');
 Route::get('/product/{id}',[HomeController::class, 'product'])->name('client.detail');
 
-
-Route::get('/cart', function () {
-    return view('Client.cart');
-});
-
-Route::get('/checkout', function () {
-    return view('Client.checkout');
-});
-
 Route::get('/thankyou', function () {
-    return view('Client.thankyou');
-});
+    $cats = Category::orderBy('name', 'ASC')->get();
+
+    return view('Client.thankyou',compact('cats'));
+})->name(
+    'client.thanku'
+);
 
 // Route::get('/send-test-email', [AcountController::class, 'sendTestEmail']);
+/////////////////////                              LOGIN CLIENT                           //////////////////////////////////
 Route::group(['prefix'=>'acount'], function(){
 
     Route::get('/login',[AcountController::class, 'login'])->name('acount.login');
@@ -66,14 +65,39 @@ Route::group(['prefix'=>'acount'], function(){
 
 });
 
+/////////////////////                              CART                           //////////////////////////////////
+Route::group(['prefix'=>'cart','middleware'=>'customers'], function(){
 
+    Route::get('/',[CartController::class, 'index'])->name('cart.index');
+
+    Route::post('/add/{product}',[CartController::class, 'add'])->name('cart.add');
+
+    Route::delete('/delete/{product}',[CartController::class, 'delete'])->name('cart.delete');
+
+    Route::get('/update/{product}',[CartController::class, 'update'])->name('cart.update');
+
+    Route::get('/clear',[CartController::class, 'clear'])->name('cart.clear');
+
+});
+
+
+/////////////////////                              ORDER                           //////////////////////////////////
+Route::group(['prefix'=>'order','middleware'=>'customers'], function(){
+
+    Route::get('/checkout',[CheckoutController::class, 'checkout'])->name('order.checkout');
+
+    Route::post('/checkout',[CheckoutController::class, 'post_checkout']);
+
+});
+
+/////////////////////                              LOGIN ADMIN                           //////////////////////////////////
 Route::get('/admin/login',[AdminController::class, 'login'])->name('admin.login');
 Route::post('/admin/login',[AdminController::class, 'check_login']);
 
 Route::get('/admin/register',[AdminController::class, 'register'])->name('admin.register');
 Route::post('/admin/register',[AdminController::class, 'check_register']);
 
-
+/////////////////////                              ADMIN                           //////////////////////////////////
 Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::resource('/admin/category', CategoryController::class);

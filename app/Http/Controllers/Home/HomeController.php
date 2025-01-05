@@ -13,6 +13,7 @@ class HomeController extends Controller
     {
         $cats = Category::orderBy('name', 'ASC')->get();
         $products = Product::orderBy('id', 'DESC')->limit(6)->get();
+        // dd($products);
         return view('Client.home', compact('cats', 'products'));
     }
 

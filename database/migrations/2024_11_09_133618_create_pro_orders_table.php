@@ -18,10 +18,10 @@ return new class extends Migration
             $table->foreignIdFor(Order::class);
             $table->foreignIdFor(Product::class);
             $table->string('name_pro');
-            $table->string('img');
+            $table->string('img')->nullable();
             $table->string('price');
-            $table->string('color');
-            $table->string('size');
+            $table->string('color')->nullable();
+            $table->string('size')->nullable();
             $table->integer('quantity');
             $table->string('total');
             $table->timestamps();
