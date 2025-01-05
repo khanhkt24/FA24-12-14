@@ -42,6 +42,8 @@ Route::get('/thankyou', function () {
 Route::group(['prefix'=>'acount'], function(){
 
     Route::get('/login',[AcountController::class, 'login'])->name('acount.login');
+    Route::get('/logout',[AcountController::class, 'logout'])->name('acount.logout');
+
     Route::get('/verify-acount/{email}',[AcountController::class, 'verify'])->name('acount.verify');
 
     Route::post('/login',[AcountController::class, 'check_login']);

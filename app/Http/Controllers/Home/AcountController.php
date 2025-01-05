@@ -7,6 +7,7 @@ use App\Mail\VerifyAcount;
 use App\Models\Category;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class AcountController extends Controller
@@ -18,9 +19,32 @@ class AcountController extends Controller
         return view('Client.account.login',compact('cats'));
     }
 
-    public function check_login()
+    public function logout()
     {
-        return view('Client.account.login');
+        auth('cus')->logout();
+        return redirect()->route('client.home')->with('success','bạn đã đăng xuất khỏi tài khoản');
+    }
+    public function check_login(Request $req)
+    {
+        $req->validate([
+            'email' => 'required|exists:customers',
+            'password' => 'required|min:8',
+        ]);
+        $data = $req->only(
+            'email',
+            'password',
+        );
+        $check = auth('cus')->attempt($data);
+
+        if($check){
+            if(auth('cus')->user()->email_verified_at == ''){
+                auth('cus')->logout();
+                return redirect()->back()->with('error','Hãy xem lại email của bạn tài khoản chưa kích hoạt!');
+            };
+            return redirect()->route('client.home')->with('success','chào mừng bạn quay lại');
+        }
+
+        return redirect()->back()->with('error','Mật khẩu hoặc tài khoản ko hợp lệ');
     }
 
     public function register()
