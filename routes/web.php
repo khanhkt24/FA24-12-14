@@ -9,8 +9,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BientheController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Home\AcountController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\UserController;
 use App\Models\Category;
 
 /*
@@ -93,12 +95,13 @@ Route::group(['prefix'=>'order','middleware'=>'customers'], function(){
 /////////////////////                              LOGIN ADMIN                           //////////////////////////////////
 Route::get('/admin/login',[AdminController::class, 'login'])->name('admin.login');
 Route::post('/admin/login',[AdminController::class, 'check_login']);
+Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 Route::get('/admin/register',[AdminController::class, 'register'])->name('admin.register');
 Route::post('/admin/register',[AdminController::class, 'check_register']);
 
 /////////////////////                              ADMIN                           //////////////////////////////////
-Route::group(['middleware' => ['auth', 'admin']], function () {
+Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('/admin/category', CategoryController::class);
     Route::get('/category/bin', [CategoryController::class, 'bin'])->name('category.bin');
@@ -124,6 +127,17 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::resource('/admin/order', OrderController::class);
 
+    //
+    Route::resource('/admin/customer', CustomerController::class);
+    Route::get('/admin/index', [CustomerController::class,'index'])->name('customer.index');
+    // Route::delete('/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+    Route::delete('/destroy/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+    //
+
+    Route::resource('/admin/user', UserController::class);
+    Route::get('/admin/user', [UserController::class,'index'])->name('user.index');
+    Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+    
 });
 
 

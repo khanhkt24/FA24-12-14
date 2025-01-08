@@ -4,62 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Customer::where('id', '!=', Auth::id()); // Loại bỏ tài khoản đăng nhập
+
+    // Kiểm tra nếu có tham số tìm kiếm "query"
+    if ($request->has('query') && $request->input('query') !== '') {
+        $query->where('email', 'like', '%' . $request->input('query') . '%');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    $user = $query->get();
+        return view('admin.customer.index', compact('user'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function destroy(String $id)
     {
-        //
+        $delete = Customer::findorFail($id);
+        $delete->delete();
+        return redirect()->route('customer.index')->with('success','Xóa thành công');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Customer $customer)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Customer $customer)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Customer $customer)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Customer $customer)
-    {
-        //
-    }
+    
 }

@@ -15,7 +15,7 @@
                         <img src="/admin/assets/images/logo-sm.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="/admin/assets/images/logo-light.png" alt="" height="17">
+                        <img width="200px"  src="/admin/assets/images/logooo.png" alt="" height="130px">
                     </span>
                 </a>
                 <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">

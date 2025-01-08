@@ -19,6 +19,6 @@ class IsAdmin
         if(Auth::user()->IsAdmin()){
             return $next($request);
         }
-       return redirect()->route("users.home")->with("success","Bạn phải là admin mới vô đây được");
+       return redirect()->route("client.home")->with("success","Bạn phải là admin mới vô đây được");
     }
 }

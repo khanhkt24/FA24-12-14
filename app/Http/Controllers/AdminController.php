@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -29,7 +31,10 @@ class AdminController extends Controller
     ]);
         $data = request()->all('email', 'password');
         if(auth()->attempt($data)){
-            return redirect()->route('admin.product');
+            $user = auth()->user();
+            $tag = Tag::query()->get();
+            $data = Product::query()->with(['tag'])->with(['category'])->paginate(7);
+            return view('admin.product.index',compact('tag', 'data','user'));
         }
         return redirect()->back();
     }
@@ -58,4 +63,10 @@ class AdminController extends Controller
         User::create($data);
         return redirect()->route('admin.login');
     }
+    public function logout()
+    {
+        auth()->logout(); // Log out the authenticated user
+        return redirect()->route('admin.login');
+    }
+
 }
