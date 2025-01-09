@@ -84,7 +84,7 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
-                            <a href="{{ route('client.detail', $pro->id) }}" class="btn btn-sm text-dark p-0"><i
+                            <a style="text-align: center" href="{{ route('client.detail', $pro->id) }}" class="btn btn-sm text-dark p-0"><i
                                     class="fas fa-eye text-primary mr-1"></i>View Detail</a>
 
                             @if (auth('cus')->check())
