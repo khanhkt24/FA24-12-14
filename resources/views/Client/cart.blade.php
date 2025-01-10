@@ -37,7 +37,7 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td class="align-middle">
-                                    <img src="{{ asset('client/img/product-1.jpg') }}" alt="" style="width: 50px;">
+                                    <img src="{{ \Storage::url($cart->product->img) }}" alt="" style="width: 50px;">
                                     @if ($cart->product)
                                         {{ $cart->product->name }}
                                     @else

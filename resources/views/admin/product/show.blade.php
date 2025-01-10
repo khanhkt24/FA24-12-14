@@ -23,11 +23,11 @@
                                                 <div class="swiper product-thumbnail-slider p-2 rounded bg-light">
                                                     <div class="swiper-wrapper">
                                                         <div class="swiper-slide">
-                                                            <img src="{{Storage::url($product->img)}}" alt="" class="img-fluid d-block" />
+                                                            <img src="{{\Storage::url($product->img)}}" alt="" class="img-fluid d-block" />
                                                         </div>
                                                         @foreach($bienthe as $item)
                                                         <div class="swiper-slide">
-                                                            <img src="{{Storage::url($item->img)}}" alt="" class="img-fluid d-block" />
+                                                            <img src="{{\Storage::url($item->img)}}" alt="" class="img-fluid d-block" />
                                                         </div>
                                                         @endforeach
                                                     </div>
@@ -268,13 +268,13 @@
 
                                                                                 <div class="d-flex flex-grow-1 gap-2 mb-3">
                                                                                     <a href="#" class="d-block">
-                                                                                        <img src="assets/images/small/img-12.jpg" alt="" class="avatar-sm rounded object-fit-cover">
+                                                                                        <img src="{{asset('client/img/cat-1.jpg')}}" alt="" class="avatar-sm rounded object-fit-cover">
                                                                                     </a>
                                                                                     <a href="#" class="d-block">
-                                                                                        <img src="assets/images/small/img-11.jpg" alt="" class="avatar-sm rounded object-fit-cover">
+                                                                                        <img src="{{asset('client/img/cat-2.jpg')}}" alt="" class="avatar-sm rounded object-fit-cover">
                                                                                     </a>
                                                                                     <a href="#" class="d-block">
-                                                                                        <img src="assets/images/small/img-10.jpg" alt="" class="avatar-sm rounded object-fit-cover">
+                                                                                        <img src="{{asset('client/img/carousel-1.jpg')}}" alt="" class="avatar-sm rounded object-fit-cover">
                                                                                     </a>
                                                                                 </div>
 

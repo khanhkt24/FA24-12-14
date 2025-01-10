@@ -112,7 +112,7 @@
                                                     <td>{{$item->name}}
                                                         <br><span style="color:gray;">{{{$item->tag?->name}}}</span>
                                                     </td>
-                                                    <td><img src="{{Storage::url($item->img)}}" alt="" width="100"></td>
+                                                    <td><img src="{{ \Storage::url($item->img)}}" alt="" width="100"></td>
                                                         <td class="email">${{$item->cost}}</td>
                                                         <td class="date">{{$item->category?->name}}</td>
                                                         <td class="status">{{$item->sale}}</td>

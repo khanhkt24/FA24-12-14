@@ -1,5 +1,8 @@
 @extends('admin.layouts.master')
 @section('content')
+@php
+    use App\Models\Order;
+@endphp
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -96,7 +99,7 @@
                                 <table class="table table-nowrap align-middle" id="orderTable">
                                     <thead class="text-muted table-light">
                                         <tr class="text-uppercase">
-                                            <th data-sort="id">ID</th>
+                                            <th data-sort="id">Mã đơn hàng</th>
                                             <th data-sort="customer_name">Người đặt hàng</th>
                                             <th data-sort="product_name">Email</th>
                                             <th data-sort="date">Số Điện thoại</th>
@@ -111,25 +114,32 @@
                                     <tbody class="list form-check-all">
                                         @foreach($data as $item)
                                         <tr>
-                                            <td class="id">{{$item->id}}</td>
-                                            <td class="customer_name">{{$item->name}}</td>
-                                            <td class="product_name">Puma Tshirt</td>
-                                            <td class="date">{{$item->email}},</td>
+                                            <td class="id">{{$item->order_code}}</td>
+                                            <td class="customer_name">{{$item->customer->name}}</td>
+                                            <td class="product_name">{{$item->email}}</td>
+                                            <td class="date">{{$item->phone}}</td>
                                             <td class="amount">{{$item->address}}</td>
                                             <td class="payment">${{$item->total}}</td>
                                             <td class="payment">{{$item->created_at->format("Y-m-d")}}</td>
                                             <td class="payment">
-                                                <select class="form-control" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
-                                                                <option value=""><span class="badge bg-warning-subtle text-warning text-uppercase"><option value="">{{$item->giaohang}}</option></span>
-                                                                <option value="all" selected>All</option>
-                                                                <option value="Pending">Pending</option>
-                                                                <option value="Inprogress">Inprogress</option>
-                                                                <option value="Cancelled">Cancelled</option>
-                                                                <option value="Pickups">Pickups</option>
-                                                                <option value="Returns">Returns</option>
-                                                                <option value="Delivered">Delivered</option>
-                                        </select></td>
-                                            <td class="payment">{{$item->thanhtoan}}</td>
+                                                <form action="{{ route('admin.orderUpdated', $item->id) }}" method="post">
+                                                    @csrf
+                                                    @method('put')
+                                                    <select name="giaohang" onchange="this.form.submit()">
+                                                        @foreach(Order::getGiaoHangStatuses() as $key => $status)
+                                                            <option value="{{ $key }}" @selected($item->giaohang == $key)>{{ $status }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                        
+                                            </td>
+                                            <td class="payment">@if ($item->thanhtoan == 0)
+                                                Thanh toán khi nhận hàng (COD)
+                                            @elseif ($item->thanhtoan == 1)
+                                                Thanh toán với VNPAY
+                                            @else
+                                                Chưa xác định
+                                            @endif</td>
                                             <td>
                                                 <ul class="list-inline hstack gap-2 mb-0">
                                                     <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View">

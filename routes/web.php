@@ -13,6 +13,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Home\AcountController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\ProOrderController;
+use App\Http\Controllers\ThongKeController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 
@@ -187,6 +188,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/admin/warehouse/destroy/{id}', [BientheController::class, 'destroy'])->name('warehouse.destroy');
 
     Route::resource('/admin/order', OrderController::class);
+    Route::get('/admin/orderUpdate', [OrderController::class,'orderUpdate'])->name('admin.orderUpdate');
+    // Route::put('/admin/orderUpdated', [OrderController::class,'updated'])->name('admin.orderUpdated');
+    Route::put('/admin/order/update/{id}', [OrderController::class, 'updateStatus'])->name('admin.orderUpdated');
+    
     //
     Route::resource('/admin/customer', CustomerController::class);
     Route::get('/admin/index', [CustomerController::class,'index'])->name('customer.index');
@@ -197,6 +202,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/admin/user', UserController::class);
     Route::get('/admin/user', [UserController::class,'index'])->name('user.index');
     Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+
+    Route::resource('/admin/thongke', ThongKeController::class);
+    Route::get('/admin/thongke', [ThongKeController::class, 'thongke'])->name('admin.thongke');
     
 });
 

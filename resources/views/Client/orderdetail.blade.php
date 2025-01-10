@@ -119,7 +119,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $proOrder->name_pro }}</td>
                                         <td>
-                                            <img src="{{ asset('client/img/' . $proOrder->img) }}" alt="Product Image" style="width: 50px;">
+                                            <img src="{{ \Storage::url($proOrder->img) }}" alt="Product Image" style="width: 50px;">
                                         </td>
                                         <td>{{ $proOrder->size }}</td>
                                         <td>{{ $proOrder->quantity }}</td>
@@ -144,7 +144,7 @@
                                     @else
                                     <td>Không thể hủy</td>
                                 @endif
-                                    <a href="">Trở Về</a>
+                                    <a href="{{route('checkout.index')}}">Trở Về</a>
                         </div>
                     </div>
     

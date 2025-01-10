@@ -37,5 +37,14 @@ class Order extends Model
         $this->status = self::TYPE_3;
         return $this->save();
     }
+    public static function getGiaoHangStatuses()
+    {
+        return [
+            'Đang xác nhận' => self::TYPE_0,
+            'Đang vận chuyển' => self::TYPE_1,
+            'Đã giao hàng' => self::TYPE_2,
+            'Đã bị hủy' => self::TYPE_3,
+        ];
+    }
     
 }

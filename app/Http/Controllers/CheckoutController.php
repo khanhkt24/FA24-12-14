@@ -77,7 +77,7 @@ class CheckoutController extends Controller
     }
     public function index()
     {
-        $orders = Order::with('proOrder', 'customer')->paginate(10);
+        $orders = Order::with('proOrder', 'customer')->latest()->paginate(10);
         $cats = Category::orderBy('name', 'ASC')->get();
         if (!session()->has('orderCode')) {
             $orderCode = 'BILL-' . strtoupper(Str::random(10));

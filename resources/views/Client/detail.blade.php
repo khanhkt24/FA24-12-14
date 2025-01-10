@@ -40,9 +40,9 @@
             <!-- Thêm class "col-lg-5" cho ảnh để chiếm 5 phần trên 12 phần của grid -->
             <div class="col-lg-5 pb-5">
                 <div class="product-images">
-                    <img id="main-image" src="{{ asset('client/img/' . $product->img) }}" alt="Main Image" class="img-fluid">
+                    <img id="main-image" src="{{ \Storage::url($product->img) }}" alt="Main Image" class="img-fluid">
                     @foreach($product->bienthe as $bienthe)
-                        <img class="thumbnail img-thumbnail mr-2" src="{{ asset('client/img/' . $bienthe->img) }}" alt="Thumbnail" 
+                        <img class="thumbnail img-thumbnail mr-2" src="{{ \Storage::url($bienthe->img) }}" alt="Thumbnail" 
                         onmouseover="changeMainImage(this)" onmouseout="resetImage()" onclick="setMainImage(this)">
                     @endforeach
                 </div>
@@ -196,7 +196,7 @@
 
     // Đặt lại ảnh chính khi bỏ chuột
     function resetImage() {
-        mainImage.src = '{{ asset('client/img/' . $product->img) }}';
+        mainImage.src = '{{ \Storage::url($product->img) }}';
     }
 
     // Thay đổi ảnh chính khi nhấn vào ảnh con
