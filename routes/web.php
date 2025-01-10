@@ -98,7 +98,7 @@ Route::get('/admin/register',[AdminController::class, 'register'])->name('admin.
 Route::post('/admin/register',[AdminController::class, 'check_register']);
 
 /////////////////////                              ADMIN                           //////////////////////////////////
-Route::group(['middleware' => ['auth', 'admin']], function () {
+Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('/admin/category', CategoryController::class);
     Route::get('/category/bin', [CategoryController::class, 'bin'])->name('category.bin');

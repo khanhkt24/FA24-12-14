@@ -29,7 +29,7 @@ class AdminController extends Controller
     ]);
         $data = request()->all('email', 'password');
         if(auth()->attempt($data)){
-            return redirect()->route('admin.product');
+            return redirect()->route('product.index');
         }
         return redirect()->back();
     }
