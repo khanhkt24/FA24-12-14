@@ -20,7 +20,7 @@
                             </div>
                         </li> <!-- end Dashboard Menu -->
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#">
+                            <a class="nav-link menu-link" href="{{route('order.index')}}">
                                 <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Quản Lý Đơn Hàng</span>
                             </a>
                         </li> <!-- end Dashboard Menu -->
@@ -31,7 +31,10 @@
                             <div class="collapse menu-dropdown" id="sidebarApps">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="{{route('product.index')}}" class="nav-link">
+                                            Danh Sách Sản Phẩm
+                                        </a>
+                                        <a href="" class="nav-link">
                                             Thêm Sản Phẩm
                                         </a>
                                         <div class="collapse menu-dropdown" id="sidebarEcommerce">
@@ -92,6 +95,23 @@
                             </div>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarAuthhh" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                                <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Quản Lý Biến Thể</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarAuthhh">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="{{route('warehouse.index')}}" class="nav-link"> Danh Sách Biến Thể
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"> Thêm
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarUser" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
                                 <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Quản Lý Người Dùng</span>
                             </a>
@@ -119,6 +139,13 @@
                                             <li class="nav-item">
                                                 <a href="#" class="nav-link" data-key="t-alerts">Thêm Danh Mục</a>
                                             </li>
+                                            <li class="nav-item">
+                                                <a href="{{route('category.index')}}" class="nav-link" data-key="t-alerts">Danh Mục Lớn</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{route('tag.index')}}" class="nav-link" data-key="t-alerts">Danh Mục Nhỏ</a>
+                                            </li>
+
                             </div>
                         </li>
                     </ul>

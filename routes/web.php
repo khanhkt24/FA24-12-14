@@ -12,6 +12,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Home\AcountController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\ProOrderController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 
@@ -37,6 +38,53 @@ Route::get('/thankyou', function () {
 })->name(
     'client.thanku'
 );
+Route::get('/chitietorder', function () {
+    $cats = Category::orderBy('name', 'ASC')->get();
+
+    return view('Client.orderdetail',compact('cats'));
+})->name(
+    'client.orderdetail'
+);
+
+// Route::get('/donhang', function () {
+//     $cats = Category::orderBy('name', 'ASC')->get();
+
+//     return view('Client.donhang',compact('cats'));
+// })->name(
+//     'client.donhang'
+// );
+
+Route::get('/thongtincanhan', function () {
+    $cats = Category::orderBy('name', 'ASC')->get();
+
+    return view('Client.thongtincanhan',compact('cats'));
+})->name(
+    'client.thongtincanhan'
+);
+
+Route::get('/test', function () {
+    $cats = Category::orderBy('name', 'ASC')->get();
+
+    return view('Client.test',compact('cats'));
+})->name(
+    'client.test'
+);
+Route::get('/orderdetail', function () {
+    $cats = Category::orderBy('name', 'ASC')->get();
+
+    return view('Client.orderdetail',compact('cats'));
+})->name(
+    'client.orderdetail'
+);
+
+Route::get('/profile', function () {
+    $cats = Category::orderBy('name', 'ASC')->get();
+
+    return view('Client.profile',compact('cats'));
+})->name(
+    'client.profile'
+);
+
 
 // Route::get('/send-test-email', [AcountController::class, 'sendTestEmail']);
 /////////////////////                              LOGIN CLIENT                           //////////////////////////////////
@@ -90,6 +138,19 @@ Route::group(['prefix'=>'order','middleware'=>'customers'], function(){
 
     Route::post('/checkout',[CheckoutController::class, 'post_checkout']);
 
+    Route::get('/orders', [CheckoutController::class, 'index'])->name('checkout.index');
+
+    Route::get('/order/cancel/{id}', [CheckoutController::class, 'cancel'])->name('order.cancel1');
+
+    Route::patch('/order/cancel/{id}', [CheckoutController::class, 'cancelOrder'])->name('order.cancel1');
+
+});
+
+/////////////////////                              ORDERDetail                           //////////////////////////////////
+Route::group(['prefix'=>'orderdetaill','middleware'=>'customers'], function(){
+
+    Route::get('/orderdetail/{id}',[CheckoutController::class, 'detail'])->name('detail.detail');
+
 });
 
 /////////////////////                              LOGIN ADMIN                           //////////////////////////////////
@@ -126,7 +187,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/admin/warehouse/destroy/{id}', [BientheController::class, 'destroy'])->name('warehouse.destroy');
 
     Route::resource('/admin/order', OrderController::class);
-
     //
     Route::resource('/admin/customer', CustomerController::class);
     Route::get('/admin/index', [CustomerController::class,'index'])->name('customer.index');

@@ -18,7 +18,7 @@
                                     @csrf
                                     <div class="row">
                                         <label for="" class="form-label">Tên</label>
-                                        <input type="text" class="form-control" name="name">
+                                        <input type="text" class="form-control" name="name" >
                                     </div>
                                     <div class="row">
                                         <label for="" class="form-label">Ảnh</label>

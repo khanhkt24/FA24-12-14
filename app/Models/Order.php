@@ -8,10 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    const TYPE_0 = 'Đang xác nhận';
     const TYPE_1 = "Đang vận chuyển";
     const TYPE_2 = "Đã giao hàng";
     const TYPE_3 = "Đã bị hủy";
-    protected $fillable = ['customer_id', 'email', 'phone', 'address','total','ngaydathang','giaohang','thanhtoan'];
+    protected $casts = [
+        'ngaydathang' => 'datetime',
+    ];
+    protected $fillable = ['customer_id', 'email', 'phone', 'address','total','ngaydathang','giaohang','thanhtoan','order_code'];
+    protected $attributes = [
+        'giaohang' => self::TYPE_0, // Đặt mặc định trong model
+    ];
     public function proOrder()
     {
         return $this->hasMany(ProOrder::class);
@@ -21,4 +28,14 @@ class Order extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+    public function cancel()
+    {
+        if ($this->status !== self::TYPE_0) {
+            return false; // Chỉ hủy nếu đơn hàng đang ở trạng thái "Đang xác nhận"
+        }
+
+        $this->status = self::TYPE_3;
+        return $this->save();
+    }
+    
 }

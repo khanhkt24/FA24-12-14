@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\ProOrder;
 use App\Http\Requests\StoreProOrderRequest;
 use App\Http\Requests\UpdateProOrderRequest;
@@ -11,9 +12,15 @@ class ProOrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function checkout()
     {
-        //
+        // $proOrders = ProOrder::with('product','order')->get();
+        // dd($proOrders);
+        // return view('Client.donhang',compact('proOrders'));
+        $proOrders = ProOrder::with(['product','order'])->get();
+        $cats = Category::orderBy('name', 'ASC')->get();
+        return view('Client.donhang', compact('proOrders','cats'));
+
     }
 
     /**

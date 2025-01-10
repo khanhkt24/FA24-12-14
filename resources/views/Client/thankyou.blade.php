@@ -3,6 +3,16 @@
 @section('content')
 <main class="main-content">
     <!--== Start Payment Success Area Wrapper ==-->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Thanh Toán Thành Công</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="{{route('client.home')}}">Trang chủ</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">Thanh Toán Thành Công</p>
+            </div>
+        </div>
+    </div>
     <section class="payment-success-area">
         <div class="container pt-5 pb-5">
             <div class="row justify-content-center">
@@ -17,7 +27,7 @@
                             {{-- <p class="desc" data-aos="fade-down" data-aos-duration="1400">Đơn hàng của bạn đã được xử lý thành công. Bạn có thể tiếp tục mua sắm hoặc xem chi tiết đơn hàng của mình bằng cách sử dụng các nút bên dưới.</p> --}}
                             <div class="btn-group mt-4">
                                 <a class="btn btn-outline-success me-2 custom-btn" href="{{route('client.shop')}}" data-aos="fade-down" data-aos-duration="1600">Tiếp tục mua hàng</a>
-                                <a class="btn btn-outline-danger order-detail-btn" href="order-tracking.html" data-aos="fade-down" data-aos-duration="1600">Chi tiết đơn hàng</a>
+                                <a class="btn btn-outline-danger order-detail-btn" href="{{route('checkout.index')}}" data-aos="fade-down" data-aos-duration="1600">Chi tiết đơn hàng</a>
                             </div>
                         </div>
                     </div>

@@ -95,6 +95,11 @@
                                     class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
                             @endif
 
+
+
+
+
+                            
                         </div>
                     </div>
                 </div>

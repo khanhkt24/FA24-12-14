@@ -23,11 +23,13 @@
                     <thead class="bg-secondary text-dark">
                         <tr>
                             <th>STT</th>
-                            <th>Products</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th>Remove</th>
+                            <th>Sản Phẩm</th>
+                            <th>Size</th>
+                            <th>Màu</th>
+                            <th>Giá</th>
+                            <th>Số Lượng</th>
+                            <th>Tổng Tiền</th>
+                            <th>Xóa</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
@@ -42,6 +44,8 @@
                                         <span>Product not found</span>
                                     @endif
                                 </td>
+                                <td class="align-middle">{{ $cart->bienthe->size}}</td>
+                                <td class="align-middle">{{ $cart->bienthe->color }}</td>
                                 <td class="align-middle">{{ number_format($cart->price, 0, ',', '.') }} VNĐ</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
