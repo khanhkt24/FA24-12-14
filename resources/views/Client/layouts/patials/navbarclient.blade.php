@@ -17,15 +17,6 @@
                             </div>
                         @endforeach
                     </div>
-                    {{-- <a href="" class="nav-item nav-link">Shirts</a>
-                    <a href="" class="nav-item nav-link">Jeans</a>
-                    <a href="" class="nav-item nav-link">Swimwear</a>
-                    <a href="" class="nav-item nav-link">Sleepwear</a>
-                    <a href="" class="nav-item nav-link">Sportswear</a>
-                    <a href="" class="nav-item nav-link">Jumpsuits</a>
-                    <a href="" class="nav-item nav-link">Blazers</a>
-                    <a href="" class="nav-item nav-link">Jackets</a>
-                    <a href="" class="nav-item nav-link">Shoes</a> --}}
                 </div>
             </nav>
         </div>
@@ -53,7 +44,7 @@
                     </div>
                     <div class="navbar-nav ml-auto py-0">
                         @if (auth('cus')->check())
-                            <a href="#" class="nav-item nav-link">Hi, {{ auth('cus')->user()->name }}</a>
+                            <a href="{{route('client.profile')}}" class="nav-item nav-link">Hi, {{ auth('cus')->user()->name }}</a>
                             <a href="{{route('acount.logout')}}" class="nav-item nav-link">logout</a>
                         @else
                             <a href="{{route('acount.login')}}" class="nav-item nav-link">Login</a>

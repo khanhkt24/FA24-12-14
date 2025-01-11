@@ -128,7 +128,7 @@
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             @if (auth('cus')->check())
-                                <a href="#" class="nav-item nav-link">Hi, {{ auth('cus')->user()->name }}</a>
+                                <a href="{{route('client.profile')}}" class="nav-item nav-link">Hi, {{ auth('cus')->user()->name }}</a>
                                 <a href="{{route('acount.logout')}}" class="nav-item nav-link">logout</a>
                             @else
                                 <a href="{{route('acount.login')}}" class="nav-item nav-link">Login</a>

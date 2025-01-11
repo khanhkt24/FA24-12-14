@@ -21,7 +21,7 @@
               <img src="{{asset('client/img/anhmd.jpg')}}" class="rounded-circle border border-2 border-primary" width="100" alt="">
             </div>
             <div class="name-user mb-3">
-              <h5 class="card-title">Tên người dùng</h5>
+              <h5 class="card-title">{{$auth->name}}</h5>
             </div>
             <ul class="list-group">
               <li class="list-group-item"><a href="{{route('client.profile')}}" class="text-decoration-none text-dark hover-link"><i class="fa-solid fa-user"></i> Hồ sơ của tôi</a></li>
@@ -43,23 +43,27 @@
               <div class="col-md-12">
                 <div class="mb-3">
                   <label for="hoTen" class="form-label">Họ và Tên</label>
-                  <input type="text" class="form-control" id="hoTen" value="Tên người dùng" disabled>
-                </div>
-                <div class="mb-3">
-                  <label for="tenDangNhap" class="form-label">Tên đăng nhập</label>
-                  <input type="text" class="form-control" id="tenDangNhap" value="tendangnhap" disabled>
+                  <input type="text" class="form-control" id="hoTen" value="{{$auth->name}}" disabled>
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="email" value="email@example.com" disabled>
+                  <input type="email" class="form-control" id="email" value="{{$auth->email}}" disabled>
                 </div>
                 <div class="mb-3">
                   <label for="sdt" class="form-label">Số điện thoại</label>
-                  <input type="text" class="form-control" id="sdt" value="0901234567" disabled>
+                  <input type="text" class="form-control" id="sdt" value="{{$auth->phone}}" disabled>
                 </div>
                 <div class="mb-3">
                   <label for="diaChi" class="form-label">Địa chỉ</label>
-                  <input type="text" class="form-control" id="diaChi" value="Địa chỉ của bạn" disabled>
+                  <input type="text" class="form-control" id="diaChi" value="{{$auth->address}}" disabled>
+                </div>
+                <div class="mb-3">
+                  <label for="diaChi" class="form-label">Giới tính</label>
+                  <input type="text" class="form-control" id="diaChi" value="@if ($auth->gender == 1)Nam
+                  @else Nữ
+                  @endif
+
+                  " disabled>
                 </div>
               </div>
             </div>

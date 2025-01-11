@@ -32,9 +32,7 @@ class AdminController extends Controller
         $data = request()->all('email', 'password');
         if(auth()->attempt($data)){
             $user = auth()->user();
-            $tag = Tag::query()->get();
-            $data = Product::query()->with(['tag'])->with(['category'])->paginate(7);
-            return view('admin.product.index',compact('tag', 'data','user'));
+            return redirect()->route('admin.thongke');
         }
         return redirect()->back();
     }

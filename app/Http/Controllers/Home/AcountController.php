@@ -70,6 +70,7 @@ class AcountController extends Controller
             'email.required' => 'Email không được để trống',
             'password.required' => 'Mật khẩu không được để trống',
         ]);
+
         $data = $req->only([
             'name',
             'email',
@@ -84,10 +85,8 @@ class AcountController extends Controller
             if ($acc->email) {
                 Mail::to($acc->email)->send(new VerifyAcount($acc));
                 return redirect()->route('acount.login')->with('success','Hãy check gmail của bạn để kích hoạt tài khoản!');
-
             } else {
                 return back()->with('error','Gmail này ko tồn tại');
-
             }
         } else {
             return back()->with('error','Gmail này ko tồn tại');

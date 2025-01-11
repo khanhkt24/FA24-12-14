@@ -6,18 +6,9 @@
                     <ul class="navbar-nav" id="navbar-nav">
                         <li class="menu-title"><span data-key="t-menu">Quản lý</span></li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                            <a class="nav-link menu-link" href="{{route('admin.thongke')}}">
                                 <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Thống Kê</span>
                             </a>
-                            <div class="collapse menu-dropdown" id="sidebarDashboards">
-                                <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                        <a href="#" class="nav-link" data-key="t-analytics">Thống Kê Doanh Thu</a>
-                                        <a href="#" class="nav-link" data-key="t-email"> Thống Kê Sản Phẩm
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </li> <!-- end Dashboard Menu -->
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="{{route('order.index')}}">
@@ -34,7 +25,7 @@
                                         <a href="{{route('product.index')}}" class="nav-link">
                                             Danh Sách Sản Phẩm
                                         </a>
-                                        <a href="" class="nav-link">
+                                        <a href="{{route('product.create')}}" class="nav-link">
                                             Thêm Sản Phẩm
                                         </a>
                                         <div class="collapse menu-dropdown" id="sidebarEcommerce">
@@ -95,38 +86,23 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#sidebarAuthhh" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                            <a class="nav-link menu-link" href="{{route('warehouse.index')}}">
                                 <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Quản Lý Biến Thể</span>
                             </a>
-                            <div class="collapse menu-dropdown" id="sidebarAuthhh">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="{{route('warehouse.index')}}" class="nav-link"> Danh Sách Biến Thể
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link"> Thêm
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#sidebarUser" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                            <a class="nav-link menu-link" href="{{route('customer.index')}}" >
                                 <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Quản Lý Người Dùng</span>
                             </a>
-                            <div class="collapse menu-dropdown" id="sidebarUser">
+                            {{-- <div class="collapse menu-dropdown" id="sidebarUser">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
                                         <a href="{{route('customer.index')}}" class="nav-link"> Danh Sách Người Dùng
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link"> Thêm Người Dùng
-                                        </a>
-                                    </li>
                                 </ul>
-                            </div>
+                            </div> --}}
                         </li>
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarUI" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarUI">
@@ -136,9 +112,6 @@
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <ul class="nav nav-sm flex-column">
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link" data-key="t-alerts">Thêm Danh Mục</a>
-                                            </li>
                                             <li class="nav-item">
                                                 <a href="{{route('category.index')}}" class="nav-link" data-key="t-alerts">Danh Mục Lớn</a>
                                             </li>

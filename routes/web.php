@@ -85,7 +85,7 @@ Route::get('/profile', function () {
 })->name(
     'client.profile'
 );
-
+Route::get('/customer', [CustomerController::class, 'hienthi'])->name('client.profile');
 
 // Route::get('/send-test-email', [AcountController::class, 'sendTestEmail']);
 /////////////////////                              LOGIN CLIENT                           //////////////////////////////////
@@ -205,9 +205,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('/admin/thongke', ThongKeController::class);
     Route::get('/admin/thongke', [ThongKeController::class, 'thongke'])->name('admin.thongke');
+
     
 });
-
 
 // $cats = Category::orderBy('name','ASC')->get();
 // $products = Product::orderBy('id','DESC')->limit(6)->get();

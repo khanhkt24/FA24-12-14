@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,5 +31,12 @@ class CustomerController extends Controller
         $delete->delete();
         return redirect()->route('customer.index')->with('success','Xóa thành công');
     }
+    public function hienthi()
+    {
+        $auth = auth('cus')->user();
+        $cats = Category::orderBy('name', 'ASC')->get();
+        return view('client.profile',compact('auth','cats'));
+    }
+    
     
 }

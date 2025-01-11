@@ -113,7 +113,7 @@
                                                     <td>{{$item->email}}</td>
                                                     <td>{{$item->phone}}</td>
                                                     <td>{{$item->address}}</td>
-                                                    <td> @if (Auth::user()->genre == 0)
+                                                    <td> @if (Auth::user()->genre == 1)
                                                         Nam
                                                     @else
                                                         Nữ
