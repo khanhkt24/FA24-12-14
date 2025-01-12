@@ -21,6 +21,9 @@
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Tên danh mục lớn</label>
                                     <input type="text" class="form-control" id="exampleInputPassword1" name="name" value="{{$category->name}}">
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-check">
                                 </div>

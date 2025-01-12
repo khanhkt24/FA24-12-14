@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h5 class="card-title flex-grow-1 mb-0">Đơn hàng {{$order->id}} - {{$order->name}}</h5>
+                            <h5 class="card-title flex-grow-1 mb-0">Mã đơn hàng: {{$order->order_code}}</h5>
                             <div class="flex-shrink-0">
                                 <a href="apps-invoices-details.html" class="btn btn-success btn-sm"><i class="ri-download-2-fill align-middle me-1"></i> In PDF</a>
                                 <a href="{{route('order.index')}}" class="btn btn-warning btn-sm">Quay lại</a>
@@ -43,7 +43,7 @@
                                         <td>
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                    <img src="assets/images/products/img-8.png" alt="" class="img-fluid d-block">
+                                                    <img src="{{Storage::url($item->img)}}" alt="" class="img-fluid d-block">
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
                                                     <h5 class="fs-15"><a href="apps-ecommerce-product-details.html" class="link-primary">{{$item->name_pro}}</a></h5>
@@ -52,10 +52,10 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>${{$item->price}}</td>
+                                        <td>{{$item->price}}VNĐ</td>
                                         <td>{{$item->quantity}}</td>
                                         <td class="fw-medium text-end">
-                                            ${{$item->price * $item->quantity}}
+                                            {{$item->price * $item->quantity}}VNĐ
                                         </td>
                                     </tr>
                                     @endforeach
@@ -66,7 +66,7 @@
                                                 <tbody>
                                                     <tr class="border-top border-top-dashed">
                                                         <th scope="row">Tổng tiền :</th>
-                                                        <th class="text-end">$415.96</th>
+                                                        <th class="text-end">${{$item->price * $item->quantity}}VNĐ</th>
                                                     </tr>
                                                 </tbody>
                                             </table>

@@ -14,17 +14,42 @@ class OrderController extends Controller
      * Display a listing of the resource.
      */
     const PATH_VIEW = 'admin/order.';
-    public function index()
-    {
-        $statuses = [
-            '0'  => Order::TYPE_0,  // 'Đang xác nhận'
-            '1'  => Order::TYPE_1,  // 'Đang vận chuyển'
-            '2'  => Order::TYPE_2,  // 'Đã giao hàng'
-            '3'  => Order::TYPE_3,  // 'Đã bị hủy'
-        ];
-        $data = Order::with('customer')->paginate(10);
-        return view(self::PATH_VIEW . __FUNCTION__, compact('data', 'statuses'));
+    public function index(Request $request)
+{
+    // Lấy các giá trị lọc từ request
+    $searchOrder = $request->get('searchOrder');
+    $giaohang = $request->get('giaohang');
+    $thanhtoan = $request->get('thanhtoan');
+
+
+    $query = Order::query();
+
+    if ($searchOrder) {
+        $query->where('order_code', 'like', '%' . $searchOrder . '%');
     }
+
+
+    if ($giaohang && $giaohang !== 'all') {
+        $query->where('giaohang', $giaohang);
+    }
+
+   
+    if ($thanhtoan && $thanhtoan !== 'all') {
+        $query->where('thanhtoan', $thanhtoan);
+    }
+
+  
+    $statuses = [
+        '0' => Order::TYPE_0,
+        '1' => Order::TYPE_1, 
+        '2' => Order::TYPE_2,  
+        '3' => Order::TYPE_3,  
+    ];
+
+    $data = $query->with('customer')->paginate(10);
+
+    return view('admin.order.index', compact('data', 'statuses'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -36,15 +61,14 @@ class OrderController extends Controller
      */
     public function updateStatus(Request $request, $id)
     {
-        // Tìm đơn hàng theo ID
+
         $order = Order::findOrFail($id);
 
-        // Kiểm tra xem giá trị cập nhật có hợp lệ không
         if (!array_key_exists($request->giaohang, Order::getGiaoHangStatuses())) {
             return back()->with('error', 'Trạng thái không hợp lệ.');
         }
 
-        // Cập nhật trạng thái giao hàng
+       
         $order->giaohang = $request->giaohang;
         $order->save();
 
@@ -57,16 +81,14 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $date = $order->created_at->format('Y-m-d');
-        $data = ProOrder::query()->where('id_order', $order->id)->get();
+        $data = ProOrder::query()->where('order_id', $order->id)->get();
         return view(self::PATH_VIEW . __FUNCTION__, compact('data', 'order', 'date'));
     }
     public function updated(Request $request, $id)
     {
         order::query()->where('id', $id)->update(['giaohang' => $request->giaohang]);
 
-        // Cập nhật chỉ các trường cần thiết
-
-        // Chuyển hướng về danh sách đơn hàng với thông báo thành công
+        
         return back();
     }
 

@@ -19,10 +19,14 @@
                                     <div class="row">
                                         <label for="" class="form-label">Tên</label>
                                         <input type="text" class="form-control" name="name">
+                                        @error('name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="row">
                                         <label for="" class="form-label">Ảnh</label>
                                         <input type="file" class="form-control" name="img">
+                                    
                                     </div><br>
                                     <div class="row">
                                     <label for="" class="form-label">Hãng sản xuất</label>

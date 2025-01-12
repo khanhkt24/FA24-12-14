@@ -23,18 +23,30 @@
                                     <div class="row">
                                         <label for="" class="form-label">Ảnh</label>
                                         <input type="file" class="form-control" name="img">
+                                        @error('img')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="row">
                                         <label for="" class="form-label">Kích cỡ</label>
                                         <input type="text" class="form-control" name="size">
+                                        @error('size')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="row">
                                         <label for="" class="form-label">Màu</label>
                                         <input type="text" class="form-control" name="color">
+                                        @error('color')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="row">
                                         <label for="" class="form-label">Số lượng</label>
                                         <input type="text" class="form-control" name="quantity">
+                                        @error('quantity')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div><br>
                                     <div class="row">
                                     <button type="submit" class="btn btn-success">Tạo mới</button>

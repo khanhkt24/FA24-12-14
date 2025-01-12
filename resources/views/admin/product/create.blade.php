@@ -18,15 +18,25 @@
                                     @csrf
                                     <div class="row">
                                         <label for="" class="form-label">Tên</label>
-                                        <input type="text" class="form-control" name="name" >
+                                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" >
+                                        @error('name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="row">
                                         <label for="" class="form-label">Ảnh</label>
                                         <input type="file" class="form-control" name="img">
+                                        @error('img')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="row">
                                         <label for="" class="form-label">Cost</label>
-                                        <input type="text" class="form-control" name="cost">
+                                        <input type="text" class="form-control" name="cost" value="{{ old('cost') }}">
+                                        
+                                        @error('cost')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="row">
                                     <label for="" class="form-label">Tag</label>
@@ -44,7 +54,7 @@
                                         </select></div>
                                         <div class="mt-3 mb-4">
                                         <label for="" class="form-check-label">Mô tả</label><br>
-                                        <textarea name="description" id="" cols="200" rows="7"></textarea>
+                                        <textarea name="description" id="" cols="200" rows="7" value="{{ old('description') }}"></textarea>
                                     </div><br>
                                     <button type="submit" class="btn btn-success">Tạo mới</button>
                                 </form>

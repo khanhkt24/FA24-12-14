@@ -66,7 +66,7 @@
                                                                 <a href="{{route('warehouse.create',$item)}}"><button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">Thêm biến thể</button></a>
                                                                 </div>
                                                                 <div class="edit">
-                                                                <a href="{{route('warehouse.edit',$item)}}"><button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">Sửa biến thể</button></a>
+                                                                <a href="{{route('warehouse.edit',$item)}}"><button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">Xem biến thể</button></a>
                                                                 </div>
                                                             </div>
                                                         </td>

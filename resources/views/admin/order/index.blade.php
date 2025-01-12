@@ -33,56 +33,50 @@
                         </div>
                     </div>
                     <div class="card-body border border-dashed border-end-0 border-start-0">
-                        <form>
+                        <form action="{{ route('order.index') }}" method="GET">
                             <div class="row g-3">
                                 <div class="col-xxl-5 col-sm-6">
                                     <div class="search-box">
-                                        <input type="text" class="form-control search" placeholder="Search for order ID, customer, order status or something...">
+                                        <input type="text" class="form-control search" name="searchOrder" value="{{ request()->get('searchOrder') }}" placeholder="Tìm kiếm theo mã đơn hàng...">
                                         <i class="ri-search-line search-icon"></i>
                                     </div>
                                 </div>
                                 <!--end col-->
-                                <div class="col-xxl-2 col-sm-6">
-                                </div>
+                                <div class="col-xxl-2 col-sm-6"></div>
                                 <!--end col-->
                                 <div class="col-xxl-2 col-sm-4">
                                     <div>
-                                        <select class="form-control" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
-                                            <option value="">Status</option>
-                                            <option value="all" selected>All</option>
-                                            <option value="Pending">Pending</option>
-                                            <option value="Inprogress">Inprogress</option>
-                                            <option value="Cancelled">Cancelled</option>
-                                            <option value="Pickups">Pickups</option>
-                                            <option value="Returns">Returns</option>
-                                            <option value="Delivered">Delivered</option>
+                                        <select class="form-control" name="giaohang">
+                                            
+                                            <option value="all" {{ request()->get('giaohang') == 'all' ? 'selected' : '' }}>Tất cả</option>
+                                            <option value="Đang xác nhận" {{ request()->get('giaohang') == 'Đang xác nhận' ? 'selected' : '' }}>Đang xác nhận</option>
+                                            <option value="Đang vận chuyển" {{ request()->get('giaohang') == 'Đang vận chuyển' ? 'selected' : '' }}>Đang vận chuyển</option>
+                                            <option value="Đã giao hàng" {{ request()->get('giaohang') == 'Đã giao hàng' ? 'selected' : '' }}>Đã giao hàng</option>
+                                            <option value="Đã bị hủy" {{ request()->get('giaohang') == 'Đã bị hủy' ? 'selected' : '' }}>Đã bị hủy</option>
                                         </select>
                                     </div>
                                 </div>
                                 <!--end col-->
                                 <div class="col-xxl-2 col-sm-4">
                                     <div>
-                                        <select class="form-control" data-choices data-choices-search-false name="choices-single-default" id="idPayment">
-                                            <option value="">Select Payment</option>
-                                            <option value="all" selected>All</option>
-                                            <option value="Mastercard">Mastercard</option>
-                                            <option value="Paypal">Paypal</option>
-                                            <option value="Visa">Visa</option>
-                                            <option value="COD">COD</option>
+                                        <select class="form-control" name="thanhtoan">
+                                            
+                                            <option value="all" {{ request()->get('thanhtoan') == 'all' ? 'selected' : '' }}>Tất cả</option>
+                                            <option value="0" {{ request()->get('thanhtoan') == '0' ? 'selected' : '' }}>Thanh toán khi nhận hàng (COD)</option>
+                                            <option value="1" {{ request()->get('thanhtoan') == '1' ? 'selected' : '' }}>	Thanh toán với VNPAY</option>
                                         </select>
                                     </div>
                                 </div>
                                 <!--end col-->
                                 <div class="col-xxl-1 col-sm-4">
                                     <div>
-                                        <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-1 align-bottom"></i>
-                                            Filters
+                                        <button type="submit" class="btn btn-primary w-100"> 
+                                            <i class="ri-equalizer-fill me-1 align-bottom"></i> Lọc
                                         </button>
                                     </div>
                                 </div>
                                 <!--end col-->
                             </div>
-                            <!--end row-->
                         </form>
                     </div>
                     <div class="card-body pt-0">
@@ -145,16 +139,6 @@
                                                     <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View">
                                                         <a href="{{route('order.show',$item)}}" class="text-primary d-inline-block">
                                                             <i class="ri-eye-fill fs-16"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
-                                                        <a href="#showModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn">
-                                                            <i class="ri-pencil-fill fs-16"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
-                                                        <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#deleteOrder">
-                                                            <i class="ri-delete-bin-5-fill fs-16"></i>
                                                         </a>
                                                     </li>
                                                 </ul>

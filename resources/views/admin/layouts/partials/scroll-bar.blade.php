@@ -28,62 +28,14 @@
                                         <a href="{{route('product.create')}}" class="nav-link">
                                             Thêm Sản Phẩm
                                         </a>
-                                        <div class="collapse menu-dropdown" id="sidebarEcommerce">
-                                            <ul class="nav nav-sm flex-column">
-                                                <li class="nav-item">
-                                                    <a href="" class="nav-link" data-key="t-products"> Danh mục lớn</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="" class="nav-link" data-key="t-product-Details">Danh mục nhỏ </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="" class="nav-link" data-key="t-create-product">Sản phẩm </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="" class="nav-link" data-key="t-orders">
-                                                        Thêm sản phẩm </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="apps-ecommerce-order-details.html" class="nav-link" data-key="t-order-details"> Order Details </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="apps-ecommerce-customers.html" class="nav-link" data-key="t-customers"> Customers </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="apps-ecommerce-cart.html" class="nav-link" data-key="t-shopping-cart"> Shopping Cart </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="apps-ecommerce-checkout.html" class="nav-link" data-key="t-checkout"> Checkout </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="apps-ecommerce-sellers.html" class="nav-link" data-key="t-sellers">
-                                                        Sellers </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="apps-ecommerce-seller-details.html" class="nav-link" data-key="t-sellers-details"> Seller Details </a>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </li>
                                 </ul>
                             </div>
                         </li> <!-- end Dashboard Menu -->
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#sidebarAuth" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                            <a class="nav-link menu-link" href="{{route('user.index')}}">
                                 <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Quản Lý Admin</span>
                             </a>
-                            <div class="collapse menu-dropdown" id="sidebarAuth">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="{{route('user.index')}}" class="nav-link"> Danh Sách Admin
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link"> Thêm
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="{{route('warehouse.index')}}">

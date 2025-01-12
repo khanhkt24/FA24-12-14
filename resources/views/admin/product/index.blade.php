@@ -91,7 +91,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        </form>
+                                    </form>
                                         <div class="table-responsive table-card mt-3 mb-1">
                                             <table class="table align-middle table-nowrap" id="customerTable">
                                                 <thead class="table-light">
@@ -101,7 +101,7 @@
                                                         <th>Ảnh</th>
                                                         <th>Giá</th>
                                                         <th>Danh mục</th>
-                                                        <th>Số lượng bán</th>
+                                                        <th>Giá đã giảm</th>
                                                         <th>Hành động</th>
                                                     </tr>
                                                 </thead>
@@ -142,19 +142,28 @@
                                                 </tbody>
                                             </table>
                                             <div class="d-flex justify-content-end">
-                                            <div class="pagination-wrap hstack gap-2">
-                                                @if ($data->onFirstPage())
-                                                    <span class="page-item pagination-prev">Previous</span>
-                                                @else
-                                                    <a class="page-item pagination-prev" href="{{ $data->previousPageUrl() }}">Previous</a>
-                                                @endif
-                                                <ul class="pagination listjs-pagination mb-0"></ul>
-                                                @if ($data->hasMorePages())
-                                                    <a  class="page-item pagination-next" href="{{ $data->nextPageUrl() }}">Next</a>
-                                                @else
-                                                    <span  class="page-item pagination-next">Next</span>
-                                                @endif
-                                            </div>
+                                                <div class="pagination-wrap hstack gap-2">
+                              
+                                                    @if ($data->onFirstPage())
+                                                        <span class="page-item pagination-prev">Previous</span>
+                                                    @else
+                                                        <a class="page-item pagination-prev" href="{{ $data->previousPageUrl() }}">Previous</a>
+                                                    @endif
+                                                                                 
+                                                    <ul class="pagination listjs-pagination mb-0">
+                                                        @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
+                                                            <li class="page-item {{ $data->currentPage() == $page ? 'active' : '' }}">
+                                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+
+                                                    @if ($data->hasMorePages())
+                                                        <a class="page-item pagination-next" href="{{ $data->nextPageUrl() }}">Next</a>
+                                                    @else
+                                                        <span class="page-item pagination-next">Next</span>
+                                                    @endif
+                                                </div>
                                         </div>
                                             </div>
                                         </div>

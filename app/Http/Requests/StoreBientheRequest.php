@@ -22,7 +22,11 @@ class StoreBientheRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'product_id' => 'required|exists:products,id',
+            'img' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'size' => 'required|string|max:50|regex:/^[\pL0-9\s]+$/u',
+            'color' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
+            'quantity' => 'required|integer|min:1',
         ];
     }
 }

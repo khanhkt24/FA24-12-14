@@ -191,11 +191,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/orderUpdate', [OrderController::class,'orderUpdate'])->name('admin.orderUpdate');
     // Route::put('/admin/orderUpdated', [OrderController::class,'updated'])->name('admin.orderUpdated');
     Route::put('/admin/order/update/{id}', [OrderController::class, 'updateStatus'])->name('admin.orderUpdated');
+    Route::get('/admin/orders/filter', [OrderController::class, 'filter'])->name('admin.filter');
     
     //
     Route::resource('/admin/customer', CustomerController::class);
     Route::get('/admin/index', [CustomerController::class,'index'])->name('customer.index');
-    // Route::delete('/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+  
     Route::delete('/destroy/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
     //
 
