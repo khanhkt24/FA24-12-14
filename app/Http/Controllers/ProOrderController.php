@@ -22,6 +22,7 @@ class ProOrderController extends Controller
         return view('Client.donhang', compact('proOrders','cats'));
 
     }
+    
 
     /**
      * Show the form for creating a new resource.

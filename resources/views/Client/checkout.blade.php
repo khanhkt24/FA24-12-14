@@ -102,15 +102,18 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" name="thanhtoan" id="directcheck" value="0" required>
+                                        <input type="radio" class="custom-control-input" name="thanhtoan" id="directcheck" value="0" >
                                         <label class="custom-control-label" for="directcheck">Thanh toán khi nhận hàng (COD)</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <form action="{{url('/vnpay_payment'))}}" method="post">
+                                        @csrf
                                     <div class="custom-control custom-radio">
                                         <input type="radio" class="custom-control-input" name="thanhtoan" id="banktransfer" value="1" required>
                                         <label class="custom-control-label" for="banktransfer">Thanh toán với VNPAY</label>
                                     </div>
+                                </form>
                                 </div>
                             </div>
                             <div class="card-footer border-secondary bg-transparent">
