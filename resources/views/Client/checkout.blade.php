@@ -11,10 +11,7 @@
             </div>
         </div>
     </div>
-    <!-- Page Header End -->
 
-
-    <!-- Checkout Start -->
     <div class="container-fluid pt-5">
         <form action="{{ route('order.checkout') }}" method="POST">
             @csrf
@@ -37,7 +34,7 @@
                             </div>
                             <div class="col-md-8 form-group">
                                 <label>Địa chỉ</label>
-                                <input class="form-control" name="address"  value="{{$auth->address}}" type="text" placeholder="+123 456 789">
+                                <input class="form-control" name="address"  value="{{$auth->address}}" type="text" placeholder="Địa chỉ nhận hàng">
                             </div>
 
                             <div class="col-md-8 form-group">
@@ -55,8 +52,8 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
+
                 <div class="col-lg-9">
                     <table class="table table-bordered text-center mb-0">
                         <thead class="bg-secondary text-dark">
@@ -71,7 +68,14 @@
                             </tr>
                         </thead>
                         <tbody class="align-middle">
+                            @php
+                                $totalPrice = 0;
+                            @endphp
                             @foreach ($carts as $index => $cart)
+                                @php
+                                    $subtotal = $cart->price * $cart->quantity;
+                                    $totalPrice += $subtotal;
+                                @endphp
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td class="align-middle">
@@ -82,15 +86,20 @@
                                             <span>Product not found</span>
                                         @endif
                                     </td>
-                                    <td class="align-middle">{{ $cart->bienthe->size}}</td>
+                                    <td class="align-middle">{{ $cart->bienthe->size }}</td>
                                     <td class="align-middle">{{ $cart->bienthe->color }}</td>
                                     <td class="align-middle">{{ number_format($cart->price, 0, ',', '.') }} VNĐ</td>
                                     <td class="align-middle">{{ $cart->quantity }}</td>
                                     <td class="align-middle">
-                                        {{ number_format($cart->price * $cart->quantity, 0, ',', '.') }}VNĐ
+                                        {{ number_format($subtotal, 0, ',', '.') }} VNĐ
                                     </td>
                                 </tr>
                             @endforeach
+
+                            <tr class="bg-light font-weight-bold">
+                                <td colspan="6" class="text-right">Tổng tiền:</td>
+                                <td class="text-danger">{{ number_format($totalPrice, 0, ',', '.') }} VNĐ</td>
+                            </tr>
                         </tbody>
                     </table>
                     
@@ -102,19 +111,20 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" name="thanhtoan" id="directcheck" value="0" required>
+                                        <input type="radio" class="custom-control-input" name="thanhtoan" id="directcheck" value="0">
                                         <label class="custom-control-label" for="directcheck">Thanh toán khi nhận hàng (COD)</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" name="thanhtoan" id="banktransfer" value="1" required>
-                                        <label class="custom-control-label" for="banktransfer">Thanh toán với VNPAY</label>
+                                        <input type="radio" class="custom-control-input" name="thanhtoan" id="onlinepayment" value="1">
+                                        <label class="custom-control-label" for="onlinepayment">Thanh toán trực tuyến</label>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="card-footer border-secondary bg-transparent">
-                                <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
+                                <button id="orderButton" type="button" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" onclick="submitOrder()">Đặt hàng</button>
                             </div>
                         </div>
                     </div>
@@ -122,28 +132,24 @@
                 </div>
             </div>
         </form>
+
+        <form id="paymentForm" action="{{ route('vnpay.payment') }}" method="post" style="display: none;">
+            @csrf
+            <input type="hidden" name="total" value="{{ $totalPrice }}">
+            <button type="submit">Thanh toán</button>
+        </form>
+
     </div>
-    <!-- Checkout End -->
+
+    <script>
+        function submitOrder() {
+            var isOnlinePayment = document.getElementById('onlinepayment').checked;
+            if (isOnlinePayment) {
+                document.getElementById('paymentForm').submit();
+            } else {
+                document.querySelector('form').submit(); // Gửi form thanh toán COD
+            }
+        }
+    </script>
+
 @endsection
- {{-- <div class="card border-secondary mb-5">
-                        <div class="card-header bg-secondary border-0">
-                            <h4 class="font-weight-semi-bold m-0">Payment</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment" id="directcheck">
-                                    <label class="custom-control-label" for="directcheck">Trả tiền trực tiếp</label>
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
-                                    <label class="custom-control-label" for="banktransfer">Quét mã ngân hàng</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer border-secondary bg-transparent">
-                            <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đăt hàng</button>
-                        </div>
-                    </div> --}}

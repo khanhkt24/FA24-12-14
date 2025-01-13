@@ -44,7 +44,10 @@ class CheckoutController extends Controller
             'ngaydathang' => now(),
             'giaohang' => Order::TYPE_0,
             'thanhtoan' => $request->thanhtoan,
-            'order_code' => 'BILL-' . strtoupper(Str::random(10)), 
+            'order_code' => 'BILL-' . strtoupper(Str::random(10)),
+            
+            
+
         ]);
 
         $carts = Cart::where('customer_id', $auth->id)->get();

@@ -1,21 +1,22 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PayController;
 use App\Http\Controllers\TagController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\BientheController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\BientheController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ThongKeController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\Home\AcountController;
-use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\ProOrderController;
-use App\Http\Controllers\ThongKeController;
-use App\Http\Controllers\UserController;
-use App\Models\Category;
+use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Home\AcountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -209,6 +210,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     
 });
+Route::get('/payment/return', [PayController::class, 'returnFromVNPAY'])->name('checkout.vnpay.returnFrom');
+Route::post('/vnpay_payment',[PayController::class,'vnpayPayment'])->name('vnpay.payment');
 
 // $cats = Category::orderBy('name','ASC')->get();
 // $products = Product::orderBy('id','DESC')->limit(6)->get();

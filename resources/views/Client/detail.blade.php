@@ -55,23 +55,27 @@
                 
                 <div class="d-flex mb-3">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
-                    @foreach($product->bienthe as $index => $bienthes)
+                    @php
+                        $sizes = collect($product->bienthe)->unique('size');
+                    @endphp
+                    @foreach($sizes as $index => $size)
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="size-{{ $index }}" name="bienthe_id" value="{{ $bienthes->id }}" required>
-                            <label class="custom-control-label" for="size-{{ $index }}">{{ $bienthes->size }}</label>
+                            <input type="radio" class="custom-control-input size-selector" id="size-{{ $index }}" name="size" value="{{ $size->size }}" required>
+                            <label class="custom-control-label" for="size-{{ $index }}">{{ $size->size }}</label>
                         </div>
                     @endforeach
                 </div>
-                <div class="d-flex mb-4">
                 
+                <div class="d-flex mb-4">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
-                    @foreach($product->bienthe as $index => $bienthess)
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="color-{{ $index }}" name="color" value="{{ $bienthess->color }}" required>
-                            <label class="custom-control-label" for="color-{{ $index }}">{{ $bienthess->color }}</label>
+                    @foreach($product->bienthe as $index => $bienthe)
+                        <div class="custom-control custom-radio custom-control-inline color-container" data-size="{{ $bienthe->size }}" style="display: none;">
+                            <input type="radio" class="custom-control-input color-selector" id="color-{{ $index }}" name="bienthe_id" value="{{ $bienthe->id }}">
+                            <label class="custom-control-label" for="color-{{ $index }}">{{ $bienthe->color }}</label>
                         </div>
                     @endforeach
                 </div>
+                
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
@@ -186,7 +190,48 @@
     </div>
 </div>
 <!-- Products End -->
+
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    let sizeRadios = document.querySelectorAll(".size-selector");
+    let colorRadios = document.querySelectorAll(".color-selector");
+    let colorContainers = document.querySelectorAll(".color-container");
+
+    function updateColors() {
+        let selectedSize = document.querySelector(".size-selector:checked");
+        if (selectedSize) {
+            let selectedSizeValue = selectedSize.value;
+
+            // Ẩn tất cả màu trước
+            colorContainers.forEach(container => {
+                container.style.display = "none";
+            });
+
+            // Hiển thị màu sắc liên quan đến size đã chọn
+            document.querySelectorAll(`.color-container[data-size='${selectedSizeValue}']`).forEach(container => {
+                container.style.display = "inline-block";
+            });
+
+            // Tự động chọn màu đầu tiên nếu chưa có màu nào được chọn
+            let firstColor = document.querySelector(`.color-container[data-size='${selectedSizeValue}'] input[name='bienthe_id']`);
+            if (firstColor) {
+                firstColor.checked = true;
+            }
+        }
+    }
+
+    // Gán sự kiện khi chọn size
+    sizeRadios.forEach(radio => {
+        radio.addEventListener("change", updateColors);
+    });
+
+    // Ẩn màu sắc ban đầu
+    updateColors();
+});
+
+
+
+    //
     let mainImage = document.getElementById('main-image');  // Lấy ảnh chính
 
     // Thay đổi ảnh chính khi hover vào ảnh con
