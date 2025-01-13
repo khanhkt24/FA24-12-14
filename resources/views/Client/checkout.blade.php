@@ -106,25 +106,29 @@
                                         <label class="custom-control-label" for="directcheck">Thanh toán khi nhận hàng (COD)</label>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <form action="{{url('/vnpay_payment'))}}" method="post">
-                                        @csrf
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" name="thanhtoan" id="banktransfer" value="1" required>
-                                        <label class="custom-control-label" for="banktransfer">Thanh toán với VNPAY</label>
-                                    </div>
-                                </form>
-                                </div>
+   
                             </div>
                             <div class="card-footer border-secondary bg-transparent">
-                                <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
+                                <button  class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
                             </div>
                         </div>
+
+                        
                     </div>
 
                 </div>
             </div>
         </form>
+        <div class="form-group">
+                                    <form action="{{route('vnpay.payment')}}" method="post">
+                                        @csrf
+                                        <div class="custom-control custom-radio">
+                                            
+                                            <input type="" name="total" value="{{ number_format($cart->price * $cart->quantity, 0, ',', '.') }}VNĐ">
+                                            <button type="submit">thanhtoan</button>
+                                        </div>
+                                    </form>
+                            </div>
     </div>
     <!-- Checkout End -->
 @endsection

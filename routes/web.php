@@ -215,5 +215,6 @@ Route::group(['middleware' => ['auth']], function () {
 // return view('Client.master',compact('cats','products'));
 // Route::get('/user/cat',[HomeController::class, 'cat'])->name('cate');
 // Cổng thanh toán
-Route::post('/vnpay_payment',[PayController::class,'vnpay_payment']);
+Route::get('/payment/return', [PayController::class, 'returnFromVNPAY'])->name('checkout.vnpay.returnFrom');
+Route::post('/vnpay_payment',[PayController::class,'vnpayPayment'])->name('vnpay.payment');
 
