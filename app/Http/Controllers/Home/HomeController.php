@@ -30,5 +30,9 @@ class HomeController extends Controller
         $product = Product::with('bienthe')->findOrFail($id);
         return view('Client.detail',compact('product','cats'));
     }
+    // public function contact(){
+    //     $giap = 'giaphcph36737@fpt.edu.vn'
+    //     Mail::to($giap)->send(new ());
+    // }
 
 }

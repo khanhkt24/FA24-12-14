@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers\Home;
 
-use App\Http\Controllers\Controller;
-use App\Mail\VerifyAcount;
+
+use Illuminate\Support\Str;
+use App\Mail\ResetPasswordMail;
+use Carbon\Carbon;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Mail\VerifyAcount;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class AcountController extends Controller
 {
@@ -126,8 +133,67 @@ class AcountController extends Controller
         return view('Client.account.reset_password');
     }
 
-    public function check_reset_password()
-    {
-        return view('Client.account.reset_password');
+    // public function check_reset_password()
+    // {
+    //     return view('Client.account.reset_password');
+    // }
+    public function send_reset_link(Request $req)
+{
+    // Validate email
+    $req->validate([
+        'email' => 'required|email|exists:customers,email',
+    ]);
+
+    // Tạo token ngẫu nhiên
+    $token = Str::random(60);
+
+    // Tìm khách hàng và cập nhật token
+    $customer = Customer::where('email', $req->email)->first();
+
+    // Đặt token và thời gian hết hạn (60 phút)
+    $customer->password_reset_token = $token;
+    $customer->password_reset_expires_at = Carbon::now()->addMinutes(60); 
+    $customer->save();
+
+    // Gửi email chứa link reset mật khẩu
+    Mail::to($customer->email)->send(new ResetPasswordMail($token, $customer->email));
+
+    // Thông báo thành công
+    return redirect()->route('password.request')->with('success', 'Chúng tôi đã gửi link đặt lại mật khẩu vào email của bạn.');
+}
+
+public function update_password(Request $req)
+{
+    // Validate form input
+    $req->validate([
+        'email' => 'required|email',
+        'token' => 'required',
+        'password' => 'required|min:8|confirmed',
+    ]);
+
+    // Kiểm tra tính hợp lệ của token và email
+    $customer = Customer::where('email', $req->email)
+                        ->where('password_reset_token', $req->token)
+                        ->where('password_reset_expires_at', '>', Carbon::now())
+                        ->first();
+
+    // Nếu không tìm thấy customer hợp lệ hoặc token hết hạn
+    if (!$customer) {
+        return back()->withErrors(['email' => 'Token không hợp lệ hoặc đã hết hạn.']);
     }
+
+    // Cập nhật mật khẩu mới
+    $customer->password = Hash::make($req->password);
+    $customer->password_reset_token = null; // Xóa token để tránh việc sử dụng lại
+    $customer->password_reset_expires_at = null; // Xóa thời gian hết hạn token
+    $customer->save();
+
+    // Chuyển hướng về trang login với thông báo thành công
+    return redirect()->route('acount.login')->with('success', 'Mật khẩu của bạn đã được cập nhật!');
+}
+public function showResetForm($token)
+{
+    $cats = Category::orderBy('name', 'ASC')->get();
+    return view('Client.account.new_password', compact('token','cats'));
+}
 }

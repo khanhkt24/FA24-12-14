@@ -49,7 +49,8 @@
                                 Đăng Nhập</button>
                         </div>
                     </form>
-                </div>
+                </div><br>
+                <a href="{{route('acount.reset_password')}}">Quên mật khẩu</a>
             </div>
             <div class="col-lg-5 mb-5">
                 <div class="d-flex flex-column mb-3">

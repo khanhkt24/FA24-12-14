@@ -212,6 +212,14 @@ Route::group(['middleware' => ['auth']], function () {
 });
 Route::get('/payment/return', [PayController::class, 'returnFromVNPAY'])->name('checkout.vnpay.returnFrom');
 Route::post('/vnpay_payment',[PayController::class,'vnpayPayment'])->name('vnpay.payment');
+Route::get('/payment/callback', [PayController::class, 'vnpayReturn'])->name('payment.callback');
+Route::get('/payment/success', function() {
+    return view('client.thankyou'); // View thành công
+});
+Route::get('password/reset', [AcountController::class, 'reset_password'])->name('password.request');
+Route::post('password/email', [AcountController::class, 'send_reset_link'])->name('password.email');
+Route::get('password/reset/{token}', [AcountController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [AcountController::class, 'update_password'])->name('password.update');
 
 // $cats = Category::orderBy('name','ASC')->get();
 // $products = Product::orderBy('id','DESC')->limit(6)->get();

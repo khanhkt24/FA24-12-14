@@ -13,7 +13,7 @@
     </div>
 
     <div class="container-fluid pt-5">
-        <form action="{{ route('order.checkout') }}" method="POST">
+        <form id="checkoutForm" action="{{ route('order.checkout') }}" method="POST">
             @csrf
             <div class="row px-xl-5">
                 <div class="col-lg-3">
@@ -144,10 +144,14 @@
     <script>
         function submitOrder() {
             var isOnlinePayment = document.getElementById('onlinepayment').checked;
+            
+            // Set the 'thanhtoan' value in the main form
             if (isOnlinePayment) {
-                document.getElementById('paymentForm').submit();
+                document.getElementById('checkoutForm').elements['thanhtoan'].value = 1;
+                document.getElementById('paymentForm').submit(); // Submit VNPAY form for online payment
             } else {
-                document.querySelector('form').submit(); // Gửi form thanh toán COD
+                document.getElementById('checkoutForm').elements['thanhtoan'].value = 0;
+                document.getElementById('checkoutForm').submit(); // Submit COD form
             }
         }
     </script>
