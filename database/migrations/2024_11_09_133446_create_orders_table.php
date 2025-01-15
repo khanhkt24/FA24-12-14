@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('total');
             $table->timestamp('ngaydathang');
-            $table->string('giaohang')->default(App\Models\Order::TYPE_0);
+            $table->string('giaohang')->default(App\Models\Order::TYPE_0);// trang thai
             $table->string('thanhtoan');
             $table->softDeletes();
             $table->timestamps();

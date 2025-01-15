@@ -51,14 +51,7 @@ class OrderController extends Controller
     return view('admin.order.index', compact('data', 'statuses'));
 }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function updateStatus(Request $request, $id)
     {
 

@@ -15,7 +15,7 @@ class Order extends Model
     protected $casts = [
         'ngaydathang' => 'datetime',
     ];
-    protected $fillable = ['customer_id', 'email', 'phone', 'address','total','ngaydathang','giaohang','thanhtoan','order_code'];
+    protected $fillable = ['customer_id', 'email', 'phone', 'address','total','ngaydathang','giaohang','thanhtoan','order_code','payment_status','transaction_id','paid_amount','payment_date',];
     protected $attributes = [
         'giaohang' => self::TYPE_0, // Đặt mặc định trong model
     ];

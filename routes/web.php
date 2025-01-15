@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PayController;
@@ -220,9 +221,7 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/payment/return', [PayController::class, 'returnFromVNPAY'])->name('checkout.vnpay.returnFrom');
 Route::post('/vnpay_payment',[PayController::class,'vnpayPayment'])->name('vnpay.payment');
 Route::get('/payment/callback', [PayController::class, 'vnpayReturn'])->name('payment.callback');
-Route::get('/payment/success', function() {
-    return view('client.thankyou'); // View thành công
-});
+
 Route::get('password/reset', [AcountController::class, 'reset_password'])->name('password.request');
 Route::post('password/email', [AcountController::class, 'send_reset_link'])->name('password.email');
 Route::get('password/reset/{token}', [AcountController::class, 'showResetForm'])->name('password.reset');
@@ -234,5 +233,8 @@ Route::post('/contact', [HomeController::class, 'sendMail'])->name('client.conta
 // $products = Product::orderBy('id','DESC')->limit(6)->get();
 // return view('Client.master',compact('cats','products'));
 // Route::get('/user/cat',[HomeController::class, 'cat'])->name('cate');
+Route::get('/payment-histories', [PaymentController::class, 'showHistories'])->name('payment.histories');
+Route::get('/products/{category}/{tag}', [ProductController::class, 'filterProducts'])->name('products.filter');
+
 
 

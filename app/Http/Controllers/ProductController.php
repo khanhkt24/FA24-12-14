@@ -176,4 +176,43 @@ class ProductController extends Controller
         $data = $products->get();
         return view('admin.product.index', compact('data','tag'));
     }
+    public function drop(Request $request)
+{
+    $query = Product::query();
+
+    // Kiểm tra nếu có tham số tag trong URL
+    if ($request->has('tag')) {
+        $query->whereHas('tags', function ($q) use ($request) {
+            $q->where('tags.id', $request->tag);
+        });
+    }
+
+    // Lấy các sản phẩm sau khi lọc
+    $products = $query->paginate(10);
+
+    return view('client.shop', compact('products'));
+}
+public function shop(Request $request)
+{
+    $query = Product::query();
+
+    // Lọc theo category
+    if ($request->has('category_id') && $request->category_id != '') {
+        $query->where('category_id', $request->category_id);
+    }
+
+    // Lọc theo tag
+    if ($request->has('tag_id') && $request->tag_id != '') {
+        $query->whereHas('tags', function ($query) use ($request) {
+            $query->where('tag_id', $request->tag_id);
+        });
+    }
+
+    // Pagination và hiển thị sản phẩm
+    $products = $query->paginate(9);
+
+    return view('client.shop', compact('products'));
+}
+
+
 }

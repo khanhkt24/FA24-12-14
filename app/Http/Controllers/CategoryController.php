@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Product;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Category;

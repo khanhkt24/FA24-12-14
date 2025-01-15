@@ -6,14 +6,13 @@
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
             <h1 class="font-weight-semi-bold text-uppercase mb-3">Our Shop</h1>
             <div class="d-inline-flex">
-                <p class="m-0"><a href="{{route('client.home')}}">Trang Chủ</a></p>
+                <p class="m-0"><a href="{{ route('client.home') }}">Trang Chủ</a></p>
                 <p class="m-0 px-2">-</p>
                 <p class="m-0">Sản Phẩm</p>
             </div>
         </div>
     </div>
     <!-- Page Header End -->
-
 
     <!-- Shop Start -->
     <div class="container-fluid pt-5">
@@ -157,55 +156,49 @@
                                         aria-expanded="false">
                                             Sort by
                                         </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                    <a class="dropdown-item" href="#">Latest</a>
-                                    <a class="dropdown-item" href="#">Popularity</a>
-                                    <a class="dropdown-item" href="#">Best Rating</a>
+                                <div class="dropdown-menu" aria-labelledby="triggerId">
+                                    <a class="dropdown-item" href="#">Newest</a>
+                                    <a class="dropdown-item" href="#">Price: Low to High</a>
+                                    <a class="dropdown-item" href="#">Price: High to Low</a>
+                                    <a class="dropdown-item" href="#">Best Seller</a>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Hiển thị các sản phẩm -->
                     @foreach ($products as $item)
                         <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                             <div class="card product-item border-0 mb-4">
                                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                    <img class="img-fluid w-100" src="{{\Storage::url($item->img)}}" alt="">
+                                    <!-- Hiển thị ảnh sản phẩm -->
+                                    <img class="img-fluid w-100" src="{{ \Storage::url($item->img) }}" alt="{{ $item->name }}">
                                 </div>
                                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                    <h6 class="text-truncate mb-3">{{$item->name}}</h6>
+                                    <!-- Tên sản phẩm -->
+                                    <h6 class="text-truncate mb-3">{{ $item->name }}</h6>
                                     <div class="d-flex justify-content-center">
-                                        <h6>{{ number_format($item->cost, 0, ',', '.') }} VNĐ</h6><h6 class="text-muted ml-2"></h6>
+                                        <!-- Giá sản phẩm -->
+                                        <h6>{{ number_format($item->cost, 0, ',', '.') }} VNĐ</h6>
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-between bg-light border">
-                                    <a href="{{route('client.detail',$item->id)}}" class="btn btn-sm text-dark p-0"><i
-                                        class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                    <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                                    <!-- Link chi tiết sản phẩm -->
+                                    <a href="{{ route('client.detail', $item->id) }}" class="btn btn-sm text-dark p-0">
+                                        <i class="fas fa-eye text-primary mr-1"></i>View Detail
+                                    </a>
+                                    <a href="#" class="btn btn-sm text-dark p-0">
+                                        <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     @endforeach
 
+                    <!-- Phân trang sản phẩm -->
                     <div class="col-12 pb-1">
                         <nav aria-label="Page navigation">
                             {{ $products->links() }}
-                          {{-- <ul class="pagination justify-content-center mb-3">
-                            <li class="page-item disabled">
-                              <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                              </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                              </a>
-                            </li>
-                          </ul> --}}
                         </nav>
                     </div>
                 </div>

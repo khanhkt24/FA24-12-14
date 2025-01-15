@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use Log;
 
 class PayController extends Controller
 {
@@ -74,47 +76,54 @@ class PayController extends Controller
 }
 public function vnpayReturn(Request $request)
 {
-    
+    Log::info('VNPAY Response', $request->all());
+
     $vnp_ResponseCode = $request->input('vnp_ResponseCode');
     $vnp_TxnRef = $request->input('vnp_TxnRef');
     $vnp_Amount = $request->input('vnp_Amount');
     $vnp_OrderInfo = $request->input('vnp_OrderInfo');
     $vnp_PaymentStatus = $request->input('vnp_PaymentStatus');
-
-  
     $paymentMethod = $request->input('payment_method'); 
 
-    
     if ($paymentMethod == 1) {
-        
         if ($vnp_ResponseCode == '00') {
             $paymentStatus = 'Thanh toán thành công';
         } else {
             $paymentStatus = 'Thanh toán thất bại';
         }
 
-        
         $order = Order::where('order_code', $vnp_TxnRef)->first();
         if ($order) {
             $order->updatePaymentStatus($vnp_TxnRef, $vnp_Amount, $vnp_OrderInfo, $vnp_ResponseCode, $paymentStatus);
+
+            // Lưu lịch sử thanh toán
+            DB::table('payment_histories')->insert([
+                'order_id' => 1,
+                'transaction_id' => 'TX12345678',
+                'amount' => 500000,
+                'status' => 'success',
+                'payment_date' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            
+            // Gửi email xác nhận
+            if ($vnp_ResponseCode == '00') {
+                \Mail::to($order->email)->send(new \App\Mail\PaymentSuccessMail($order));
+            }
         }
 
-        
         if ($vnp_ResponseCode == '00') {
-            return redirect()->route('client.thankyou'); 
+            return redirect()->route('client.mail.thankyou'); 
         } else {
             return redirect()->route('client.thatbai'); 
         }
     }
 
-    
     if ($paymentMethod == 0) {
-        
         return redirect()->route('client.thanku'); 
     }
 
-    
     return redirect()->route('client.thatbai');
-
 }
-}
+}   
