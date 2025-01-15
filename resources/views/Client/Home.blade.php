@@ -90,16 +90,16 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
                             <a style="text-align: center" href="{{ route('client.detail', $pro->id) }}"
-                                class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
 
                             @if (auth('cus')->check())
                                 <a href="{{ route('cart.add', $pro->id) }}" class="btn btn-sm text-dark p-0"><i
-                                        class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                                        class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
                             @else
                                 <a href="{{ route('acount.login') }}"
                                     onclick="return confirm('Bạn phải đăng nhập để thêm vào giỏ hàng')"
                                     class="btn btn-sm text-dark p-0"><i
-                                        class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                                        class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
                             @endif
 
 

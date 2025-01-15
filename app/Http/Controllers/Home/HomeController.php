@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Home;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\Category;
+use App\Mail\ContactEmail;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -30,9 +32,16 @@ class HomeController extends Controller
         $product = Product::with('bienthe')->findOrFail($id);
         return view('Client.detail',compact('product','cats'));
     }
-    // public function contact(){
-    //     $giap = 'giaphcph36737@fpt.edu.vn'
-    //     Mail::to($giap)->send(new ());
-    // }
+    public function contact(){
+        $cats = Category::orderBy('name', 'ASC')->get();
+        return view('client.contact',compact('cats'));
+    }
+    public function sendMail(){
+        $name = request('name');
+        $email = request('email');
+        $body = request('body');
+        Mail::to($email)->send(new ContactEmail($name,$email,$body));
+        return redirect()->route('client.contact')->with('success','Đã gửi thành công vui lòng đợi trong giây lát!');
+    }
 
 }

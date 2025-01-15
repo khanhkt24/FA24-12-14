@@ -130,7 +130,8 @@ class AcountController extends Controller
 
     public function reset_password()
     {
-        return view('Client.account.reset_password');
+        $cats = Category::orderBy('name', 'ASC')->get();
+        return view('Client.account.reset_password',compact('cats'));
     }
 
     // public function check_reset_password()

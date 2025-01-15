@@ -63,6 +63,13 @@ Route::get('/thongtincanhan', function () {
 })->name(
     'client.thongtincanhan'
 );
+Route::get('/contact', function () {
+    $cats = Category::orderBy('name', 'ASC')->get();
+
+    return view('Client.contact',compact('cats'));
+})->name(
+    'client.contact'
+);
 
 Route::get('/test', function () {
     $cats = Category::orderBy('name', 'ASC')->get();
@@ -221,6 +228,8 @@ Route::post('password/email', [AcountController::class, 'send_reset_link'])->nam
 Route::get('password/reset/{token}', [AcountController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [AcountController::class, 'update_password'])->name('password.update');
 
+Route::get('/contact', [HomeController::class, 'contact'])->name('client.contact');
+Route::post('/contact', [HomeController::class, 'sendMail'])->name('client.contactt');
 // $cats = Category::orderBy('name','ASC')->get();
 // $products = Product::orderBy('id','DESC')->limit(6)->get();
 // return view('Client.master',compact('cats','products'));
