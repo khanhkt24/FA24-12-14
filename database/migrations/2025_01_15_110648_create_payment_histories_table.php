@@ -10,7 +10,7 @@ class CreatePaymentHistoriesTable extends Migration
     {
         Schema::create('payment_histories', function (Blueprint $table) {
             $table->id(); 
-            $table->unsignedBigInteger('order_id'); 
+            $table->string('order_code'); 
             $table->string('transaction_id');
             $table->decimal('amount', 10, 2); 
             $table->string('status'); 

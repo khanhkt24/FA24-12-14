@@ -160,6 +160,9 @@ Route::group(['prefix'=>'order','middleware'=>'customers'], function(){
 Route::group(['prefix'=>'orderdetaill','middleware'=>'customers'], function(){
 
     Route::get('/orderdetail/{id}',[CheckoutController::class, 'detail'])->name('detail.detail');
+    Route::get('/orderdetailpayment/{id}',[CheckoutController::class, 'detail_payment'])->name('detail.payment');
+
+    
 
 });
 

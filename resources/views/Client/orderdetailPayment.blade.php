@@ -111,13 +111,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($orders->proOrder as $index => $proOrder)
+                                    @foreach ($products as $proOrder)
                                     @php
                                         $tongTien += $proOrder->total;
                                     @endphp
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $proOrder->name_pro }}</td>
+                                        <td>{{ 1 }}</td>
+                                        <td>{{ $proOrder->product->name }}</td>
                                         <td>
                                             <img src="{{ \Storage::url($proOrder->img) }}" alt="Product Image" style="width: 50px;">
                                         </td>
@@ -130,11 +130,11 @@
                                 <tr>
                                     <td colspan="6" class="text-right"><strong>Tổng tiền</strong></td>
                                     <td><strong>{{ number_format($tongTien, 0, ',', '.') }} VNĐ</strong></td>
-                                    <!-- @foreach($products as $pro)
+                                    @foreach($products as $pro)
                                     
                 
                                     <td>{{dd($pro)}}</td>
-                                    @endforeach -->
+                                    @endforeach
                                 </tr>
                                 </tbody>
                             </table>

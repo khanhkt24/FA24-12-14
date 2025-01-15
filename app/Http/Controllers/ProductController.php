@@ -197,22 +197,20 @@ public function shop(Request $request)
     $query = Product::query();
 
     // Lọc theo category
-    if ($request->has('category_id') && $request->category_id != '') {
-        $query->where('category_id', $request->category_id);
+    if ($request->has('category_id')) {
+        $query->whereIn('category_id', $request->input('category_id'));
     }
 
     // Lọc theo tag
-    if ($request->has('tag_id') && $request->tag_id != '') {
-        $query->whereHas('tags', function ($query) use ($request) {
-            $query->where('tag_id', $request->tag_id);
+    if ($request->has('tag_id')) {
+        $query->whereHas('tags', function ($q) use ($request) {
+            $q->whereIn('id', $request->input('tag_id'));
         });
     }
 
-    // Pagination và hiển thị sản phẩm
-    $products = $query->paginate(9);
-
-    return view('client.shop', compact('products'));
+    return view('Client.shop', compact('products'));
 }
+
 
 
 }

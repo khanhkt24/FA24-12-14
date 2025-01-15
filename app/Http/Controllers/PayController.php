@@ -2,29 +2,76 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\ProOrder;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Log;
+use Str;
 
 class PayController extends Controller
 {
     public function vnpayPayment(Request $request)
 {
-    // Thông tin cấu hình VNPAY
-// $data = $request->all();
-// dd($data);
-    $total = $request->input('total');
+    $auth = auth('cus')->user();
+
+    // Tạo mã đơn hàng mới
+    $order_code = 'BILL-' . strtoupper(Str::random(10));
+    
+    // Tạo đơn hàng (còn thiếu thông tin email, phone, address nếu cần)
+    $order = Order::create([
+        'customer_id' => $auth->id,
+        'email' => $auth->email ?? "",
+        'phone' => $auth->phone ?? "",
+        'address' => $auth->address ?? "",
+        'total' => 0,
+        'ngaydathang' => now(),
+        'giaohang' => Order::TYPE_0,
+        'thanhtoan' => "",
+        'order_code' => $order_code
+    ]);
+
+    // Lấy sản phẩm trong giỏ hàng của khách
+    $carts = Cart::where('customer_id', $auth->id)->get();
+    $total = 0;
+
+    // Lặp qua từng sản phẩm trong giỏ hàng và tạo bản ghi sản phẩm trong đơn hàng
+    foreach ($carts as $cart) {
+        $proOrder = new ProOrder();
+        $proOrder->order_id = $order->id;
+        $proOrder->product_id = $cart->product_id;
+        $proOrder->name_pro = $cart->product->name;
+        $proOrder->img = $cart->product->img;
+        $proOrder->price = $cart->price;
+        $proOrder->color = $cart->bienthe->color;
+        $proOrder->size = $cart->bienthe->size;
+        $proOrder->quantity = $cart->quantity;
+        $proOrder->total = $cart->quantity * $cart->price;
+
+        $proOrder->save();
+
+        $total += $proOrder->total;
+    }
+
+    // Cập nhật tổng tiền cho đơn hàng
+    $order->total = $total;
+    $order->save();
+
+    // Xóa giỏ hàng sau khi tạo đơn hàng
+    Cart::where('customer_id', $auth->id)->delete();
+
+    // Cấu hình cổng thanh toán VNPAY
     $vnp_TmnCode = "TP1GFETD"; // Mã website tại VNPAY
     $vnp_HashSecret = "CK7G7ASMD4UDHBC7KRGQNIQVTBBZ6ENI"; // Chuỗi bí mật
     $vnp_ReturnUrl = route('payment.callback'); // URL trả về sau thanh toán
     $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"; // URL cổng thanh toán (sandbox)
 
     // Thông tin giao dịch
-    $vnp_TxnRef = time(); // Mã đơn hàng duy nhất
+    $vnp_TxnRef = $order_code; // Mã đơn hàng duy nhất
     $vnp_OrderInfo = "Thanh toán đơn hàng";
     $vnp_OrderType = "billpayment";
-    $vnp_Amount = (int) str_replace(['.', 'VNĐ'], '', $total)* 100; // Số tiền (đổi ra đơn vị VND)
+    $vnp_Amount = (int) str_replace(['.', 'VNĐ'], '', $total) * 100; // Số tiền (đổi ra đơn vị VND)
     $vnp_Locale = "vn"; // Ngôn ngữ
     $vnp_BankCode = ""; // Để trống nếu không chọn ngân hàng cụ thể
     $vnp_IpAddr = $request->ip(); // Lấy IP của người dùng
@@ -50,7 +97,6 @@ class PayController extends Controller
         $inputData['vnp_BankCode'] = $vnp_BankCode;
     }
 
-    //var_dump($inputData);
     ksort($inputData);
     $query = "";
     $i = 0;
@@ -67,12 +113,10 @@ class PayController extends Controller
 
     $vnp_Url = $vnp_Url . "?" . $query;
     if (isset($vnp_HashSecret)) {
-
-        $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
+        $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
         $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         return redirect($vnp_Url);
     }
-    
 }
 public function vnpayReturn(Request $request)
 {
@@ -83,9 +127,7 @@ public function vnpayReturn(Request $request)
     $vnp_Amount = $request->input('vnp_Amount');
     $vnp_OrderInfo = $request->input('vnp_OrderInfo');
     $vnp_PaymentStatus = $request->input('vnp_PaymentStatus');
-    $paymentMethod = $request->input('payment_method'); 
-
-    if ($paymentMethod == 1) {
+// dd($request->all());
         if ($vnp_ResponseCode == '00') {
             $paymentStatus = 'Thanh toán thành công';
         } else {
@@ -93,13 +135,12 @@ public function vnpayReturn(Request $request)
         }
 
         $order = Order::where('order_code', $vnp_TxnRef)->first();
-        if ($order) {
-            $order->updatePaymentStatus($vnp_TxnRef, $vnp_Amount, $vnp_OrderInfo, $vnp_ResponseCode, $paymentStatus);
+        
 
             // Lưu lịch sử thanh toán
             DB::table('payment_histories')->insert([
-                'order_id' => 1,
-                'transaction_id' => 'TX12345678',
+                'order_code' => $vnp_TxnRef,
+                'transaction_id' => $vnp_TxnRef,
                 'amount' => 500000,
                 'status' => 'success',
                 'payment_date' => now(),
@@ -108,22 +149,15 @@ public function vnpayReturn(Request $request)
             ]);
             
             // Gửi email xác nhận
-            if ($vnp_ResponseCode == '00') {
-                \Mail::to($order->email)->send(new \App\Mail\PaymentSuccessMail($order));
-            }
-        }
 
         if ($vnp_ResponseCode == '00') {
-            return redirect()->route('client.mail.thankyou'); 
+            return redirect()->route('client.thanku'); 
         } else {
             return redirect()->route('client.thatbai'); 
         }
-    }
 
-    if ($paymentMethod == 0) {
-        return redirect()->route('client.thanku'); 
-    }
+    
 
-    return redirect()->route('client.thatbai');
+   
 }
 }   

@@ -45,8 +45,6 @@ class CheckoutController extends Controller
             'giaohang' => Order::TYPE_0,
             'thanhtoan' => $request->thanhtoan,
             'order_code' => 'BILL-' . strtoupper(Str::random(10)),
-            
-            
 
         ]);
 
@@ -80,36 +78,51 @@ class CheckoutController extends Controller
     }
     public function index()
     {
-        $orders = Order::with('proOrder', 'customer')->latest()->paginate(10);
+        $orders = Order::with('proOrder', 'customer')
+            ->select('orders.*', 'payment_histories.status as payment_status')
+            ->leftJoin('payment_histories', 'orders.order_code', '=', 'payment_histories.order_code')
+            ->latest()->paginate(10);
         $cats = Category::orderBy('name', 'ASC')->get();
         if (!session()->has('orderCode')) {
             $orderCode = 'BILL-' . strtoupper(Str::random(10));
-            session()->put('orderCode', $orderCode); 
+            session()->put('orderCode', $orderCode);
         } else {
-            $orderCode = session('orderCode'); 
+            $orderCode = session('orderCode');
         }
-        return view('Client.donhang', compact('orders','cats','orderCode'));
+        // dd($orders);
+        return view('Client.donhang', compact('orders', 'cats', 'orderCode'));
     }
     public function detail($id)
     {
+        // $products = ProOrder::with('product')->where('order_id', $id)->get();
         $orders = Order::with('proOrder', 'customer')->findOrFail($id);
         $cats = Category::orderBy('name', 'ASC')->get();
         $orderCode = 'BILL-' . strtoupper(Str::random(10));
-        return view('Client.orderdetail', compact('orders','cats','orderCode'));
+
+        return view('Client.orderdetail', compact('orders', 'cats', 'orderCode'));
+    }
+    public function detail_payment($id)
+    {
+        $products = ProOrder::with('product')->where('order_id', $id)->get();
+        $orders = Order::with('proOrder', 'customer')->findOrFail($id);
+        $cats = Category::orderBy('name', 'ASC')->get();
+        $orderCode = 'BILL-' . strtoupper(Str::random(10));
+
+        return view('Client.orderdetailPayment', compact( 'orders','cats', 'orderCode', 'products'));
     }
     public function cancelOrder($id)
     {
         try {
             $order = Order::findOrFail($id);
-    
-            if ($order->giaohang == Order::TYPE_0) { 
-               
-                $order->giaohang = Order::TYPE_3; 
+
+            if ($order->giaohang == Order::TYPE_0) {
+
+                $order->giaohang = Order::TYPE_3;
                 $order->save();
-    
+
                 return redirect()->route('checkout.index')->with('success', 'Hủy đơn hàng thành công');
             }
-    
+
             return redirect()->route('checkout.index')->with('error', 'Không thể hủy đơn hàng vì trạng thái không phải "Đang xác nhận".');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return redirect()->route('checkout.index')->with('error', 'Đơn hàng không tồn tại.');

@@ -58,6 +58,13 @@
                         </td>
                         <td>{{ number_format($order->total, 0, ',', '.') }} VNĐ</td>
                         <td>{{ $order->ngaydathang->format('d/m/Y') }}</td>
+                        <!-- <td>{{ $order->payment_status=='success'?'Thanh toans thanh cong' : 'Chưa thanh toán'}}</td> -->
+                         <td>
+                          @if ($order->payment_status == 'success')
+                              thanh toan thanh cong
+                              @elseif ($order->payment_status == '')                          
+                          @endif
+                         </td>
                         <td>
                             @php
                                 $statusClasses = [
@@ -81,9 +88,18 @@
                           @endif
                       </td>
                       <td>
-                        <a href="{{route('detail.detail',$order->id)}}">
+                      @if ($order->thanhtoan == 0)
+                      <a href="{{route('detail.detail',$order->id)}}">
                           <i class="fas fa-eye"></i>
                         </a>
+                          @elseif ($order->thanhtoan == null)
+                             <a href="{{route('detail.payment',$order->id)}}">
+                          <i class="fas fa-eye"></i>
+                        </a>
+                          @else
+                              Chưa xác định
+                          @endif
+                        
                       </td>
                     </tr>
                     @endforeach
