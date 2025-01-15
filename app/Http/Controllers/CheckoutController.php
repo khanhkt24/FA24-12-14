@@ -68,6 +68,10 @@ class CheckoutController extends Controller
 
             $total += $proOrder->total;
         }
+        if ($request->payment_method == 'vnpay') {
+            // Thực hiện redirect tới cổng thanh toán VNPay
+            return redirect()->route('vnpay.payment', ['order_id' => $order->id]);
+        }
 
         $order->total = $total;
         $order->save();
@@ -76,6 +80,7 @@ class CheckoutController extends Controller
 
         return redirect()->route('client.thanku')->with('success', 'Đặt hàng thành công!');
     }
+    
     public function index()
     {
         $orders = Order::with('proOrder', 'customer')

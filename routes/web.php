@@ -1,13 +1,14 @@
 <?php
 
+
 use App\Http\Controllers\PaymentController;
 use App\Models\Category;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PayController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BientheController;
 use App\Http\Controllers\ProductController;
@@ -238,6 +239,5 @@ Route::post('/contact', [HomeController::class, 'sendMail'])->name('client.conta
 // Route::get('/user/cat',[HomeController::class, 'cat'])->name('cate');
 Route::get('/payment-histories', [PaymentController::class, 'showHistories'])->name('payment.histories');
 Route::get('/products/{category}/{tag}', [ProductController::class, 'filterProducts'])->name('products.filter');
-
 
 

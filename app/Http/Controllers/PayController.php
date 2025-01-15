@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Cart;
 use App\Models\ProOrder;
 use DB;
@@ -14,6 +15,7 @@ class PayController extends Controller
 {
     public function vnpayPayment(Request $request)
 {
+
     $auth = auth('cus')->user();
 
     // Tạo mã đơn hàng mới
@@ -72,11 +74,25 @@ class PayController extends Controller
     $vnp_OrderInfo = "Thanh toán đơn hàng";
     $vnp_OrderType = "billpayment";
     $vnp_Amount = (int) str_replace(['.', 'VNĐ'], '', $total) * 100; // Số tiền (đổi ra đơn vị VND)
+    // Thông tin cấu hình VNPAY
+// $data = $request->all();
+// dd($data);
+$total = $request->input('total');
+    $vnp_TmnCode = "TP1GFETD"; // Mã website tại VNPAY
+    $vnp_HashSecret = "CK7G7ASMD4UDHBC7KRGQNIQVTBBZ6ENI"; // Chuỗi bí mật
+    // $vnp_ReturnUrl = "https://localhost/vnpay_php/vnpay_return.php"; // URL trả về sau thanh toán
+    $vnp_ReturnUrl = route('payment.result'); // URL Laravel route
+    $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"; // URL cổng thanh toán (sandbox)
+
+    // Thông tin giao dịch
+    $vnp_TxnRef = time(); // Mã đơn hàng duy nhất
+    $vnp_OrderInfo = "Thanh toán đơn hàng";
+    $vnp_OrderType = "billpayment";
+    $vnp_Amount = (int) str_replace(['.', 'VNĐ'], '', $total)* 100; // Số tiền (đổi ra đơn vị VND)
     $vnp_Locale = "vn"; // Ngôn ngữ
     $vnp_BankCode = ""; // Để trống nếu không chọn ngân hàng cụ thể
     $vnp_IpAddr = $request->ip(); // Lấy IP của người dùng
     $vnp_CreateDate = now()->format('YmdHis'); // Ngày giờ tạo giao dịch
-    
     // Dữ liệu đầu vào cho VNPAY
     $inputData = [
         "vnp_Version" => "2.1.0",
@@ -96,6 +112,7 @@ class PayController extends Controller
     if (isset($vnp_BankCode) && $vnp_BankCode != "") {
         $inputData['vnp_BankCode'] = $vnp_BankCode;
     }
+
 
     ksort($inputData);
     $query = "";
@@ -161,3 +178,9 @@ public function vnpayReturn(Request $request)
    
 }
 }   
+
+
+        $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
+        $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+        return redirect($vnp_Url);
+    

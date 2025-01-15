@@ -111,6 +111,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="custom-control custom-radio">
+<<<<<<< HEAD
                                         <input type="radio" class="custom-control-input" name="thanhtoan" id="directcheck" value="0">
                                         <label class="custom-control-label" for="directcheck">Thanh toán khi nhận hàng (COD)</label>
                                     </div>
@@ -121,17 +122,31 @@
                                         <label class="custom-control-label" for="onlinepayment">Thanh toán trực tuyến</label>
                                     </div>
                                 </div>
+=======
+                                        <input type="radio" class="custom-control-input" name="thanhtoan" id="directcheck" value="0" >
+                                        <label class="custom-control-label" for="directcheck">Thanh toán khi nhận hàng (COD)</label>
+                                    </div>
+                                </div>
+   
+>>>>>>> a1499cebd2829c6de594a1708dd78c76a93e4878
                             </div>
 
                             <div class="card-footer border-secondary bg-transparent">
+<<<<<<< HEAD
                                 <button id="orderButton" type="button" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" onclick="submitOrder()">Đặt hàng</button>
+=======
+                                <button  class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
+>>>>>>> a1499cebd2829c6de594a1708dd78c76a93e4878
                             </div>
                         </div>
+
+                        
                     </div>
 
                 </div>
             </div>
         </form>
+<<<<<<< HEAD
 
         <form id="paymentForm" action="{{ route('vnpay.payment') }}" method="post" style="display: none;">
             @csrf
@@ -139,6 +154,18 @@
             <button type="submit">Thanh toán</button>
         </form>
 
+=======
+        <div class="form-group">
+                                    <form action="{{route('vnpay.payment')}}" method="post">
+                                        @csrf
+                                        <div class="custom-control custom-radio">
+                                            
+                                            <input type="" name="total" value="{{ number_format($cart->price * $cart->quantity, 0, ',', '.') }}VNĐ">
+                                            <button type="submit">thanhtoan</button>
+                                        </div>
+                                    </form>
+                            </div>
+>>>>>>> a1499cebd2829c6de594a1708dd78c76a93e4878
     </div>
 
     <script>

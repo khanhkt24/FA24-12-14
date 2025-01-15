@@ -108,4 +108,16 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function checkout(Request $request)
+{
+    if ($request->payment_method == 'vnpay') {
+        return redirect()->route('vnpay.payment', ['amount' => $request->total_amount]);
+    }
+
+    // Xử lý thanh toán COD
+    $order = $this->saveOrder($request); // Hàm xử lý lưu đơn hàng
+    return redirect()->route('order.success');
+}
+
 }
