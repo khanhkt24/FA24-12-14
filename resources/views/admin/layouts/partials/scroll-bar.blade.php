@@ -44,6 +44,12 @@
                             
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{route('admin.binhluan')}}">
+                                <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Quản Lý Bình luận</span>
+                            </a>
+                            
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link menu-link" href="{{route('customer.index')}}" >
                                 <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Quản Lý Người Dùng</span>
                             </a>

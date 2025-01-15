@@ -9,6 +9,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BientheController;
+use App\Http\Controllers\BinhLuanController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ThongKeController;
 use App\Http\Controllers\CategoryController;
@@ -58,8 +60,8 @@ Route::get('/chitietorder', function () {
 
 Route::get('/thongtincanhan', function () {
     $cats = Category::orderBy('name', 'ASC')->get();
-
-    return view('Client.thongtincanhan',compact('cats'));
+    $auth = auth('cus')->user();
+    return view('Client.thongtincanhan',compact('cats','auth'));
 })->name(
     'client.thongtincanhan'
 );
@@ -159,6 +161,7 @@ Route::group(['prefix'=>'order','middleware'=>'customers'], function(){
 Route::group(['prefix'=>'orderdetaill','middleware'=>'customers'], function(){
 
     Route::get('/orderdetail/{id}',[CheckoutController::class, 'detail'])->name('detail.detail');
+    Route::get('/orderdetailpayment/{id}',[CheckoutController::class, 'detail_payment'])->name('detail.payment');
 
 });
 
@@ -215,7 +218,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/admin/thongke', ThongKeController::class);
     Route::get('/admin/thongke', [ThongKeController::class, 'thongke'])->name('admin.thongke');
 
+    Route::resource('/admin/binhluan', CommentController::class);
+    Route::get('/admin/binhluan', [CommentController::class, 'binhluan'])->name('admin.binhluan');
+    Route::put('/admin/binhluan/destroy/{id}', [CommentController::class, 'delete'])->name('admin.binhluan.destroy');
     
+});
+Route::middleware(['auth:cus'])->group(function () {
+    Route::get('/order/{id}/comment', [CommentController::class, 'create'])->name('order.comment');
+    Route::post('/product/{id}/comment', [CommentController::class, 'store'])->name('comment.store');
 });
 Route::get('/payment/return', [PayController::class, 'returnFromVNPAY'])->name('checkout.vnpay.returnFrom');
 Route::post('/vnpay_payment',[PayController::class,'vnpayPayment'])->name('vnpay.payment');
@@ -230,6 +240,11 @@ Route::post('password/reset', [AcountController::class, 'update_password'])->nam
 
 Route::get('/contact', [HomeController::class, 'contact'])->name('client.contact');
 Route::post('/contact', [HomeController::class, 'sendMail'])->name('client.contactt');
+
+// Route::post('/updateprofile', [CheckoutController::class, 'updateProfile'])->name('client.updateProfile');
+Route::get('/profile/edit/{id}', [CheckoutController::class, 'editProfile'])->name('client.editProfile');
+Route::post('/profile/update/{id}', [CheckoutController::class, 'updateProfile'])->name('client.updateProfile');
+
 // $cats = Category::orderBy('name','ASC')->get();
 // $products = Product::orderBy('id','DESC')->limit(6)->get();
 // return view('Client.master',compact('cats','products'));

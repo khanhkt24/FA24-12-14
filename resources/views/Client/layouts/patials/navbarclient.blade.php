@@ -5,19 +5,26 @@
                 <h6 class="m-0">Danh Mục</h6>
                 <i class="fa fa-angle-down text-dark"></i>
             </a>
-            <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
-                <div class="navbar-nav w-100 overflow">
-                    <div class="nav-item dropdown">
-                        @foreach ($cats as $item)
-                            <a href="#" class="nav-link" data-toggle="dropdown"> {{$item->name}} <i class="fa fa-angle-down float-right mt-1"></i></a>
-                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                <a href="" class="dropdown-item">Men's Dresses</a>
-                                <a href="" class="dropdown-item">Women's Dresses</a>
-                                <a href="" class="dropdown-item">Baby's Dresses</a>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+            <nav class="navbar navbar-light">
+                <ul class="navbar-nav">
+                    @foreach ($cats as $category)
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-expanded="false">
+                                {{ $category->name }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @foreach ($category->tag as $tag)
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('client.shop', ['tag' => $tag->id]) }}">
+                                            {{ $tag->name }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endforeach
+                </ul>
             </nav>
         </div>
         <div class="col-lg-9">

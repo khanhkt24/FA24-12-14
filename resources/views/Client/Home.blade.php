@@ -10,7 +10,7 @@
                     <a href="" class="cat-img position-relative overflow-hidden mb-3">
                         <img class="img-fluid" src="client/img/cat-1.jpg" alt="">
                     </a>
-                    <h5 class="font-weight-semi-bold m-0">Men's dresses</h5>
+                    <h5 class="font-weight-semi-bold m-0">QUẦN ÁO NAM</h5>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 pb-1 text-center">
@@ -19,7 +19,7 @@
                     <a href="" class="cat-img position-relative overflow-hidden mb-3">
                         <img class="img-fluid" src="client/img/cat-2.jpg" alt="">
                     </a>
-                    <h5 class="font-weight-semi-bold m-0">Women's dresses</h5>
+                    <h5 class="font-weight-semi-bold m-0">QUẦN ÁO NỮ</h5>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 pb-1 text-center">
@@ -28,7 +28,7 @@
                     <a href="" class="cat-img position-relative overflow-hidden mb-3">
                         <img class="img-fluid" src="client/img/cat-3.jpg" alt="">
                     </a>
-                    <h5 class="font-weight-semi-bold m-0">Kid Shirt</h5>
+                    <h5 class="font-weight-semi-bold m-0">ĐỒ GIẢM GIÁ</h5>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                     <div class="card product-item border-0 mb-4">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="{{\Storage::url($pro->img)}}" alt="">
+                            <a href="{{ route('client.detail', $pro->id) }}"><img class="img-fluid w-100" src="{{\Storage::url($pro->img)}}" alt=""></a>
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">{{ $pro->name }}</h6>
@@ -87,26 +87,6 @@
                                 @endif
 
                             </div>
-                        </div>
-                        <div class="card-footer d-flex justify-content-between bg-light border">
-                            <a style="text-align: center" href="{{ route('client.detail', $pro->id) }}"
-                                class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
-
-                            @if (auth('cus')->check())
-                                <a href="{{ route('cart.add', $pro->id) }}" class="btn btn-sm text-dark p-0"><i
-                                        class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
-                            @else
-                                <a href="{{ route('acount.login') }}"
-                                    onclick="return confirm('Bạn phải đăng nhập để thêm vào giỏ hàng')"
-                                    class="btn btn-sm text-dark p-0"><i
-                                        class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ hàng</a>
-                            @endif
-
-
-
-
-
-
                         </div>
                     </div>
                 </div>
@@ -124,9 +104,9 @@
                 <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
                     <img src="img/offer-1.png" alt="">
                     <div class="position-relative" style="z-index: 1;">
-                        <h5 class="text-uppercase text-primary mb-3">Collab Product</h5>
+                        <h5 class="text-uppercase text-primary mb-3">SẢN PHẨM</h5>
 
-                        <h1 class="mb-4 font-weight-semi-bold">Spring Collection</h1>
+                        <h1 class="mb-4 font-weight-semi-bold">QUẦN ÁO NAM</h1>
                         <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
                     </div>
                 </div>
@@ -135,8 +115,8 @@
                 <div class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-5 px-5">
                     <img src="img/offer-2.png" alt="">
                     <div class="position-relative" style="z-index: 1;">
-                        <h5 class="text-uppercase text-primary mb-3">Collab Product</h5>
-                        <h1 class="mb-4 font-weight-semi-bold">Winter Collection</h1>
+                        <h5 class="text-uppercase text-primary mb-3">SẢN PHẨM</h5>
+                        <h1 class="mb-4 font-weight-semi-bold">QUẦN ÁO NỮ</h1>
                         <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
                     </div>
                 </div>
@@ -149,7 +129,7 @@
     <!-- Products Start -->
     <div class="container-fluid pt-5">
         <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Just Arrived</span></h2>
+            <h2 class="section-title px-5"><span class="px-2">SẢN PHẨM GIẢM GIÁ</span></h2>
         </div>
         <div class="row px-xl-5 pb-3">
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">

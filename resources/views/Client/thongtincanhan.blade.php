@@ -21,7 +21,7 @@
                       <img src="{{asset('client/img/anhmd.jpg')}}" class="rounded-circle border border-2 border-primary" width="100" alt="">
                   </div>
                   <div class="name-user mb-3">
-                      <h5 class="card-title">Tên người dùng</h5>
+                      <h5 class="card-title">{{$auth->name}}</h5>
                   </div>
                   <ul class="list-group">
                     <li class="list-group-item"><a href="{{route('client.profile')}}" class="text-decoration-none text-dark hover-link"><i class="fa-solid fa-user"></i> Hồ sơ của tôi</a></li>
@@ -39,31 +39,28 @@
                   <h4 class="card-title text-primary">Chỉnh sửa hồ sơ</h4>
                   <p class="card-text mb-4">Cập nhật thông tin của bạn để bảo mật tài khoản tốt hơn</p>
 
-                  <form action="./index.php?act=luuthongtin" method="post">
+                  <form action="{{ route('client.updateProfile',$auth->id) }}" method="post">
+                    @csrf
                       <div class="row">
                           <div class="col-md-6">
                               <div class="mb-3">
                                   <label for="hoTen" class="form-label">Họ và Tên</label>
-                                  <input type="text" class="form-control" id="hoTen" name="hoTen" value="Tên người dùng">
-                              </div>
-                              <div class="mb-3">
-                                  <label for="tenDangNhap" class="form-label">Tên đăng nhập</label>
-                                  <input type="text" class="form-control" id="tenDangNhap" name="tenDangNhap" value="tendangnhap" readonly>
+                                  <input type="text" class="form-control" id="hoTen" name="hoTen" value="{{$auth->name}}">
                               </div>
                               <div class="mb-3">
                                   <label for="email" class="form-label">Email</label>
-                                  <input type="email" class="form-control" id="email" name="email" value="email@example.com">
+                                  <input type="email" class="form-control" id="email" name="email" value="{{$auth->email}}" readonly>
                               </div>
                           </div>
 
                           <div class="col-md-6">
                               <div class="mb-3">
                                   <label for="sdt" class="form-label">Số điện thoại</label>
-                                  <input type="text" class="form-control" id="sdt" name="sdt" value="0901234567">
+                                  <input type="text" class="form-control" id="sdt" name="sdt" value="{{$auth->phone}}">
                               </div>
                               <div class="mb-3">
                                   <label for="diaChi" class="form-label">Địa chỉ</label>
-                                  <input type="text" class="form-control" id="diaChi" name="diaChi" value="Địa chỉ của bạn">
+                                  <input type="text" class="form-control" id="diaChi" name="diaChi" value="{{$auth->address}}" >
                               </div>
                           </div>
                       </div>

@@ -51,85 +51,90 @@
                     @endif
 
                     <div class="myaccount-content mb-4">
-                        <div class="row">
-                            <!-- Cột bên trái: Thông tin khách hàng -->
-                            <div class="col-lg-6">
-                                <h3 class="text-uppercase">Thông tin khách hàng</h3>
-                                <div class="account-details-form">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label for="customer-email" class="required">Email</label>
-                                                <input type="text" id="customer-email" class="form-control"
-                                                    value="{{ $orders->customer->email }}" disabled>
+                        <h3 class="text-uppercase">Thông tin vận chuyển</h3>
+                        <div class="account-details-form">
+                            <div class="row">
+                                <!-- Cột bên trái: Thông tin khách hàng -->
+                                <div class="col-lg-6">
+                                    <h3 class="text-uppercase">Thông tin khách hàng</h3>
+                                    <div class="account-details-form">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="customer-email" class="required">Email</label>
+                                                    <input type="text" id="customer-email" class="form-control"
+                                                        value="{{ $orders->customer->email }}" disabled>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label for="customer-name" class="required">Tên khách hàng</label>
-                                                <input type="text" id="customer-name" class="form-control"
-                                                    value="{{ $orders->customer->name }}" disabled>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="customer-name" class="required">Tên khách hàng</label>
+                                                    <input type="text" id="customer-name" class="form-control"
+                                                        value="{{ $orders->customer->name }}" disabled>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label for="customer-phone" class="required">Số điện thoại</label>
-                                                <input type="text" id="customer-phone" class="form-control"
-                                                    value="{{ $orders->customer->phone }}" disabled>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="customer-phone" class="required">Số điện thoại</label>
+                                                    <input type="text" id="customer-phone" class="form-control"
+                                                        value="{{ $orders->customer->phone }}" disabled>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label for="customer-address" class="required">Địa chỉ nhận hàng</label>
-                                                <input type="text" id="customer-address" class="form-control"
-                                                    value="{{ $orders->customer->address }}" disabled>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="customer-address" class="required">Địa chỉ nhận hàng</label>
+                                                    <input type="text" id="customer-address" class="form-control"
+                                                        value="{{ $orders->customer->address }}" disabled>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        
-                            <!-- Cột bên phải: Thông tin giao hàng -->
-                            <div class="col-lg-6">
-                                <h3 class="text-uppercase">Thông tin giao hàng</h3>
-                                <div class="account-details-form">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label for="shipping-email" class="required">Email</label>
-                                                <input type="text" id="shipping-email" class="form-control"
-                                                    value="{{ $orders->email }}" disabled>
+                            
+                                <!-- Cột bên phải: Thông tin giao hàng -->
+                                <div class="col-lg-6">
+                                    <h3 class="text-uppercase">Thông tin giao hàng</h3>
+                                    <div class="account-details-form">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="shipping-email" class="required">Email</label>
+                                                    <input type="text" id="shipping-email" class="form-control"
+                                                        value="{{ $orders->email }}" disabled>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label for="shipping-name" class="required">Tên khách hàng</label>
-                                                <input type="text" id="shipping-name" class="form-control"
-                                                    value="{{ $orders->customer->name }}" disabled>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="shipping-name" class="required">Tên khách hàng</label>
+                                                    <input type="text" id="shipping-name" class="form-control"
+                                                        value="{{ $orders->customer->name }}" disabled>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label for="shipping-phone" class="required">Số điện thoại</label>
-                                                <input type="text" id="shipping-phone" class="form-control"
-                                                    value="{{ $orders->phone }}" disabled>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="shipping-phone" class="required">Số điện thoại</label>
+                                                    <input type="text" id="shipping-phone" class="form-control"
+                                                        value="{{ $orders->phone }}" disabled>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label for="shipping-address" class="required">Địa chỉ nhận hàng</label>
-                                                <input type="text" id="shipping-address" class="form-control"
-                                                    value="{{ $orders->address }}" disabled>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="shipping-address" class="required">Địa chỉ nhận hàng</label>
+                                                    <input type="text" id="shipping-address" class="form-control"
+                                                        value="{{ $orders->address }}" disabled>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="myaccount-content">
                             <h3 class="text-uppercase mb-3">Chi tiết đơn hàng</h3>
                             <div class="myaccount-table table-responsive text-center">
+                                @php
+                                    $tongTien = 0;
+                                @endphp
                                 <table class="table table-bordered">
                                     <thead class="thead-light">
                                         <tr>
@@ -139,22 +144,17 @@
                                             <th>Size</th>
                                             <th>Số lượng</th>
                                             <th>Giá bán</th>
-                                            <th>Thao tác</th>
+                                            <th>Tổng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
-                                        @php
-                                            $tongTien = 0;
-                                        @endphp
-
-                                        @foreach ($orders->proOrder as $index => $proOrder)
+                                        @foreach ($products as $proOrder)
                                             @php
                                                 $tongTien += $proOrder->total;
                                             @endphp
                                             <tr>
-                                                <td>{{ $index + 1 }}</td>
-                                                <td>{{ $proOrder->name_pro }}</td>
+                                                <td>{{ 1 }}</td>
+                                                <td>{{ $proOrder->product->name }}</td>
                                                 <td>
                                                     <img src="{{ \Storage::url($proOrder->img) }}" alt="Product Image"
                                                         style="width: 50px;">
@@ -165,11 +165,11 @@
                                                 <td>{{ number_format($proOrder->total, 0, ',', '.') }} VNĐ</td>
                                             </tr>
                                         @endforeach
-                                        
-
                                         <tr>
                                             <td colspan="6" class="text-right"><strong>Tổng tiền</strong></td>
                                             <td><strong>{{ number_format($tongTien, 0, ',', '.') }} VNĐ</strong></td>
+                                            @foreach ($products as $pro)
+                                            @endforeach
                                         </tr>
                                     </tbody>
                                 </table>
@@ -186,13 +186,11 @@
                                 @else
                                     <td>Không thể hủy</td>
                                 @endif
-
                                 <a href="{{ route('checkout.index') }}">Trở Về</a>
                             </div>
                         </div>
 
                     </div>
-
                 </div>
             </div>
     </section>

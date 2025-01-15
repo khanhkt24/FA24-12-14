@@ -21,7 +21,7 @@
             <img src="{{asset('client/img/anhmd.jpg')}}" class="rounded-circle border border-2 border-primary" width="100" alt="">
           </div>
           <div class="name-user mb-3">
-            <h5 class="card-title">Tên người dùng</h5>
+            <h5 class="card-title">{{$auth->name}}</h5>
           </div>
           <ul class="list-group">
             <li class="list-group-item"><a href="{{route('client.profile')}}" class="text-decoration-none text-dark hover-link"><i class="fa-solid fa-user"></i> Hồ sơ của tôi</a></li>
@@ -45,50 +45,70 @@
                         <th>Mã đơn hàng</th>
                         <th>Tổng Tiền</th>
                         <th>Ngày Đặt Hàng</th>
+                        <th>Thanh Toán</th>
                         <th>Trạng Thái</th>
                         <th>Phương Thức Thanh Toán</th>
                         <th>Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($orders as $index => $order)
-                    <tr>
-                        <td>
-                          <span>{{$order->order_code}}</span> <!-- Hiển thị mã đơn hàng được tạo một lần duy nhất -->
-                        </td>
-                        <td>{{ number_format($order->total, 0, ',', '.') }} VNĐ</td>
-                        <td>{{ $order->ngaydathang->format('d/m/Y') }}</td>
-                        <td>
-                            @php
-                                $statusClasses = [
-                                    'Đang xác nhận' => 'bg-warning',
-                                    'Đang vận chuyển' => 'bg-info',
-                                    'Đã giao hàng' => 'bg-success',
-                                    'Đã bị hủy' => 'bg-danger',
-                                ];
-                            @endphp
-                            <span class="badge {{ $statusClasses[$order->giaohang] ?? 'bg-secondary' }}">
-                                {{ $order->giaohang }}
-                            </span>
-                        </td>
-                        <td>
-                          @if ($order->thanhtoan == 0)
-                              Thanh toán khi nhận hàng (COD)
-                          @elseif ($order->thanhtoan == 1)
-                              Thanh toán với VNPAY
-                          @else
-                              Chưa xác định
-                          @endif
+                  @foreach ($orders as $index => $order)
+                  <tr>
+                      <td>
+                        <span>{{$order->order_code}}</span> <!-- Hiển thị mã đơn hàng được tạo một lần duy nhất -->
+                      </td>
+                      <td>{{ number_format($order->total, 0, ',', '.') }} VNĐ</td>
+                      <td>{{ $order->ngaydathang->format('d/m/Y') }}</td>
+                      <td>
+                        @php
+                            $paymentStatus = ($order->payment_status == 'success' || $order->giaohang == 'Đã giao hàng') 
+                                ? 'Thanh Toán Thành Công' 
+                                : 'Chưa Thanh Toán';
+                        @endphp
+                        {{ $paymentStatus }}
+                    </td>
+                      <td>
+                          @php
+                              $statusClasses = [
+                                  'Đang xác nhận' => 'bg-warning',
+                                  'Đang vận chuyển' => 'bg-info',
+                                  'Đã giao hàng' => 'bg-success',
+                                  'Đã bị hủy' => 'bg-danger',
+                              ];
+                          @endphp
+                          <span class="badge {{ $statusClasses[$order->giaohang] ?? 'bg-secondary' }}">
+                              {{ $order->giaohang }}
+                          </span>
                       </td>
                       <td>
-                        <a href="{{route('detail.detail',$order->id)}}">
-                          <i class="fas fa-eye"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    @endforeach
-                </tbody>
+                        @if ($order->thanhtoan == 0)
+                            Thanh toán khi nhận hàng (COD)
+                        @elseif ($order->thanhtoan != 0)
+                            Thanh toán với VNPAY
+                        @else
+                            Chưa xác định
+                        @endif
+                    </td>
+                    <td>
+                    @if ($order->thanhtoan == 0)
+                    <a href="{{route('detail.detail',$order->id)}}">
+                        <i class="fas fa-eye"></i>
+                      </a>
+                        @elseif ($order->thanhtoan == null)
+                           <a href="{{route('detail.payment',$order->id)}}">
+                        <i class="fas fa-eye"></i>
+                      </a>
+                        @else
+                            Chưa xác định
+                        @endif
+                      
+                    </td>
+                  </tr>
+                  @endforeach
+              </tbody>
+              
             </table>
+            {{$orders->links()}}
             </div>
           </form>
         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Models\Comment;
 use App\Models\Product;
 use App\Models\Category;
 use App\Mail\ContactEmail;
@@ -27,10 +28,11 @@ class HomeController extends Controller
     }
 
     Public function product(String $id){
-
         $cats = Category::orderBy('name', 'ASC')->get();
         $product = Product::with('bienthe')->findOrFail($id);
-        return view('Client.detail',compact('product','cats'));
+        $comments = Comment::where('product_id', $id)->get();
+        $bienthes = $product->bienthe;
+        return view('Client.detail',compact('product','cats','comments','bienthes'));
     }
     public function contact(){
         $cats = Category::orderBy('name', 'ASC')->get();

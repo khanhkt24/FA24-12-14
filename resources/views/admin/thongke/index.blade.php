@@ -1,33 +1,38 @@
 @extends('admin.layouts.master')
 
 @section('content')
-   
-    <div class="row project-wrapper">
+  <div class="row project-wrapper">
         <!-- Column for Active Projects -->
         <div class="col-xxl-4 col-xl-6">
-            <div class="card card-animate">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="avatar-sm flex-shrink-0">
-                            <span class="avatar-title bg-primary-subtle text-primary rounded-2 fs-2">
-                                <i data-feather="briefcase" class="text-primary"></i>
-                            </span>
+            <div class="col-xxl-12 col-xl-12">
+                <div class="card card-animate">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Khách hàng mua từ 3 đơn trở lên</h4>
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Tên khách hàng</th>
+                                        <th>Số đơn hàng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($customers as $customer)
+                                        <tr>
+                                            <td>{{ $customer->name }}</td>
+                                            <td>{{ $customer->order_count }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="flex-grow-1 ms-3">
-                            <p class="text-uppercase fw-medium text-muted mb-3">Thống kê người dùng</p>
-                            <div class="d-flex align-items-center mb-3">
-                                <h4 class="fs-4 flex-grow-1 mb-0">
-                                    <span class="counter-value" data-target="{{ $totalUsers }}">{{ $totalUsers }}</span>
-                                </h4>
-                            </div>
-                            <p class="text-muted mb-0">Tổng số người dùng</p>
-                        </div>
-                    </div>
-                </div><!-- end card body -->
-            </div>
+                    </div><!-- end card body -->
+                </div>
+            </div><!-- end col -->
         </div><!-- end col -->
 
-        <!-- Column for New Leads -->
+        
+        <!-- Column for New Users -->
         <div class="col-xxl-4 col-xl-6">
             <div class="card card-animate">
                 <div class="card-body">

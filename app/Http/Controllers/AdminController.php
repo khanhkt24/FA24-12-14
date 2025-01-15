@@ -32,6 +32,7 @@ class AdminController extends Controller
         $data = request()->all('email', 'password');
         if(auth()->attempt($data)){
             $user = auth()->user();
+            
             return redirect()->route('admin.thongke');
         }
         return redirect()->back();
@@ -64,6 +65,7 @@ class AdminController extends Controller
     public function logout()
     {
         auth()->logout(); // Log out the authenticated user
+        
         return redirect()->route('admin.login');
     }
 

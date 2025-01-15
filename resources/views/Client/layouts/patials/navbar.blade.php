@@ -5,31 +5,26 @@
                 <h6 class="m-0">Danh Mục</h6>
                 <i class="fa fa-angle-down text-dark"></i>
             </a>
-            <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                    <div class="nav-item dropdown">
-                        @if(isset($cats))
-                            @foreach ($cats as $item)
-                                <a href="#" class="nav-link" data-toggle="dropdown"> {{$item->name}} <i class="fa fa-angle-down float-right mt-1"></i></a>
-                                {{-- <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                    <a href="" class="dropdown-item">Men's Dresses</a>
-                                    <a href="" class="dropdown-item">Women's Dresses</a>
-                                    <a href="" class="dropdown-item">Baby's Dresses</a>
-                                </div> --}}
-                            @endforeach
-                        @endif
-
-                    </div>
-                    {{-- <a href="" class="nav-item nav-link">Shirts</a>
-                    <a href="" class="nav-item nav-link">Jeans</a>
-                    <a href="" class="nav-item nav-link">Swimwear</a>
-                    <a href="" class="nav-item nav-link">Sleepwear</a>
-                    <a href="" class="nav-item nav-link">Sportswear</a>
-                    <a href="" class="nav-item nav-link">Jumpsuits</a>
-                    <a href="" class="nav-item nav-link">Blazers</a>
-                    <a href="" class="nav-item nav-link">Jackets</a>
-                    <a href="" class="nav-item nav-link">Shoes</a> --}}
-                </div>
+            <nav class="navbar navbar-light">
+                <ul class="navbar-nav">
+                    @foreach ($cats as $category)
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-expanded="false">
+                                {{ $category->name }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @foreach ($category->tag as $tag)
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('client.shop', ['tag' => $tag->id]) }}">
+                                            {{ $tag->name }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endforeach
+                </ul>
             </nav>
         </div>
         <div class="col-lg-9">
@@ -66,8 +61,8 @@
                         <img class="img-fluid" src="client/img/carousel-1.jpg" alt="Image">
                         <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div class="p-3" style="max-width: 700px;">
-                                <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
-                                <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
+                                <h4 class="text-light text-uppercase font-weight-medium mb-3">Giảm 10% sản phẩm</h4>
+                                <h3 class="display-4 text-white font-weight-semi-bold mb-4">Quần áo</h3>
                                 <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
                             </div>
                         </div>
@@ -76,8 +71,8 @@
                         <img class="img-fluid" src="client/img/carousel-2.jpg" alt="Image">
                         <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div class="p-3" style="max-width: 700px;">
-                                <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
-                                <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
+                                <h4 class="text-light text-uppercase font-weight-medium mb-3">Giảm 10% sản phẩm</h4>
+                                <h3 class="display-4 text-white font-weight-semi-bold mb-4">Quần áo</h3>
                                 <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
                             </div>
                         </div>
