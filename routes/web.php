@@ -33,6 +33,8 @@ use App\Http\Controllers\Home\AcountController;
 /////////////////////                              HOME                           //////////////////////////////////
 Route::get('/',[HomeController::class, 'index'])->name('client.home');
 Route::get('/shop',[HomeController::class, 'indexLayout'])->name('client.shop');
+// Route::post('/filter-orders', [HomeController::class, 'filterByPrice'])->name('client.filterByPrice');
+Route::get('/search', [HomeController::class, 'search'])->name('product.search');
 Route::get('/product/{id}',[HomeController::class, 'product'])->name('client.detail');
 
 Route::get('/thankyou', function () {
@@ -240,6 +242,9 @@ Route::post('password/reset', [AcountController::class, 'update_password'])->nam
 
 Route::get('/contact', [HomeController::class, 'contact'])->name('client.contact');
 Route::post('/contact', [HomeController::class, 'sendMail'])->name('client.contactt');
+
+Route::get('/admin/products', [HomeController::class, 'search'])->name('admin.product.index');
+// Route::get('/shop', [HomeController::class, 'tag'])->name('client.shop.index');
 
 // Route::post('/updateprofile', [CheckoutController::class, 'updateProfile'])->name('client.updateProfile');
 Route::get('/profile/edit/{id}', [CheckoutController::class, 'editProfile'])->name('client.editProfile');
