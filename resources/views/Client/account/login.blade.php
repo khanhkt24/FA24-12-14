@@ -33,6 +33,9 @@
                             <input type="email" class="form-control" name="email"  placeholder="Your Email"
                                 data-validation-required-message="Please enter your email" />
                             <p class="help-block text-danger"></p>
+                            @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
 
 
@@ -42,6 +45,9 @@
                             <input type="text" class="form-control" name="password"  placeholder="Mật khẩu của bạn"
                                 data-validation-required-message="Please enter your email" />
                             <p class="help-block text-danger"></p>
+                            @error('password')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <div>

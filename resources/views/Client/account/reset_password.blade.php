@@ -29,12 +29,14 @@
 
                     <div class="form-group">
                         <label for="email">Email của bạn</label>
-                        <input type="email" name="email" id="email" class="form-control" required>
+                        <input type="email" name="email" id="email" class="form-control">
+                        @if ($errors->has('email'))
+                            <small class="text-danger">{{ $errors->first('email') }}</small>
+                        @endif
                     </div>
                     <button type="submit" class="btn btn-primary">Gửi link đặt lại mật khẩu</button>
                 </form>
             </div><br>
-            <a href="{{route('acount.reset_password')}}">Quên mật khẩu</a>
         </div>
         <div class="col-lg-5 mb-5">
             <div class="d-flex flex-column mb-3">

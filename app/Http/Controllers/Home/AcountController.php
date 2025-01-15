@@ -32,27 +32,34 @@ class AcountController extends Controller
         return redirect()->route('client.home')->with('success','bạn đã đăng xuất khỏi tài khoản');
     }
     public function check_login(Request $req)
-    {
-        $req->validate([
-            'email' => 'required|exists:customers',
-            'password' => 'required|min:8',
-        ]);
-        $data = $req->only(
-            'email',
-            'password',
-        );
-        $check = auth('cus')->attempt($data);
+{
+    $req->validate([
+        'email' => 'required|email|exists:customers,email',  // Thêm rule email để kiểm tra định dạng
+        'password' => 'required|min:4',
+    ], [
+        'email.required' => 'Email không được để trống',
+        'email.email' => 'Email không đúng định dạng',  // Thông báo lỗi nếu email không đúng định dạng
+        'email.exists' => 'Email này không tồn tại',
+        'password.required' => 'Mật khẩu không được để trống',
+        'password.min' => 'Mật khẩu phải có ít nhất 4 ký tự',
+    ]);
 
-        if($check){
-            if(auth('cus')->user()->email_verified_at == ''){
-                auth('cus')->logout();
-                return redirect()->back()->with('error','Hãy xem lại email của bạn tài khoản chưa kích hoạt!');
-            };
-            return redirect()->route('client.home')->with('success','chào mừng bạn quay lại');
+    $data = $req->only('email', 'password');
+    $check = auth('cus')->attempt($data);
+
+    if ($check) {
+        if (auth('cus')->user()->email_verified_at == null) {
+            auth('cus')->logout();
+            return redirect()->back()->with('error', 'Hãy xem lại email của bạn, tài khoản chưa kích hoạt!');
         }
 
-        return redirect()->back()->with('error','Mật khẩu hoặc tài khoản ko hợp lệ');
+        return redirect()->route('client.home')->with('success', 'Chào mừng bạn quay lại');
     }
+
+    return redirect()->back()->with('error', 'Mật khẩu hoặc tài khoản không hợp lệ');
+}
+
+
 
     public function register()
     {
@@ -65,40 +72,46 @@ class AcountController extends Controller
     }
 
     public function check_register(Request $req)
-    {
-        $req->validate([
-            'name' => 'required|min:2|max:100',
-            'email' => 'required|email|min:2|max:100|unique:customers',
-            'password' => 'required|min:8',
-            'confirm_password' => 'required|min:8|same:password',
+{
+    // Validate dữ liệu nhập vào
+    $req->validate([
+        'name' => 'required|min:2|max:100',
+        'email' => 'required|email|min:2|max:100|unique:customers',
+        'password' => 'required|min:8',
+        'confirm_password' => 'required|min:8|same:password',
+    ], [
+        'name.required' => 'Tên không được để trống',
+        'email.required' => 'Email không được để trống',
+        'password.required' => 'Mật khẩu không được để trống',
+        'confirm_password.required' => 'Xác nhận mật khẩu không được để trống',
+    ]);
 
-        ], [
-            'name.required' => 'Tên không được để trống',
-            'email.required' => 'Email không được để trống',
-            'password.required' => 'Mật khẩu không được để trống',
-        ]);
+    // Lưu dữ liệu vào cơ sở dữ liệu
+    $data = $req->only([
+        'name',
+        'email',
+        'phone',
+        'address',
+        'gender',
+    ]);
+    $data['password'] = bcrypt($req->password);
 
-        $data = $req->only([
-            'name',
-            'email',
-            'phone',
-            'address',
-            'gender',
-        ]);
-        $data['password'] = bcrypt($req->password);
-
-        if ($acc = Customer::create($data)) {
-
-            if ($acc->email) {
-                Mail::to($acc->email)->send(new VerifyAcount($acc));
-                return redirect()->route('acount.login')->with('success','Hãy check gmail của bạn để kích hoạt tài khoản!');
-            } else {
-                return back()->with('error','Gmail này ko tồn tại');
-            }
+    if ($acc = Customer::create($data)) {
+        // Nếu tạo tài khoản thành công, gửi email kích hoạt
+        if ($acc->email) {
+            Mail::to($acc->email)->send(new VerifyAcount($acc));
+            // Đưa thông báo thành công vào session
+            return redirect()->route('acount.login')->with('success', 'Hãy kiểm tra email của bạn để kích hoạt tài khoản!');
         } else {
-            return back()->with('error','Gmail này ko tồn tại');
+            // Thông báo lỗi
+            return back()->with('error', 'Email này không tồn tại');
         }
+    } else {
+        // Thông báo lỗi khi tạo tài khoản
+        return back()->with('error', 'Đã xảy ra lỗi khi tạo tài khoản');
     }
+}
+
 
     public function verify($email)
     {
