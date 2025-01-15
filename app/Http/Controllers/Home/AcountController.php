@@ -77,13 +77,21 @@ class AcountController extends Controller
     $req->validate([
         'name' => 'required|min:2|max:100',
         'email' => 'required|email|min:2|max:100|unique:customers',
+        'phone' => 'required|min:10|max:11',    
+        'address' => 'required|min:2|max:100',
         'password' => 'required|min:8',
         'confirm_password' => 'required|min:8|same:password',
     ], [
         'name.required' => 'Tên không được để trống',
         'email.required' => 'Email không được để trống',
+        'email.email' => 'Email không đúng định dạng',  // Thêm thông báo cho định dạng email không hợp lệ
+        'phone.required' => 'Số điện thoại không được để trống',
+        'phone.min' => 'Số điện thoại phải có ít nhất 10 ký tự', // Thêm thông báo cho số điện thoại ngắn quá
+        'address.required' => 'Địa chỉ không được để trống',
         'password.required' => 'Mật khẩu không được để trống',
+        'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự', // Thêm thông báo cho mật khẩu ngắn quá
         'confirm_password.required' => 'Xác nhận mật khẩu không được để trống',
+        'confirm_password.same' => 'Mật khẩu xác nhận không khớp', // Thêm thông báo khi mật khẩu không khớp
     ]);
 
     // Lưu dữ liệu vào cơ sở dữ liệu
@@ -111,6 +119,7 @@ class AcountController extends Controller
         return back()->with('error', 'Đã xảy ra lỗi khi tạo tài khoản');
     }
 }
+
 
 
     public function verify($email)
@@ -209,5 +218,31 @@ public function showResetForm($token)
 {
     $cats = Category::orderBy('name', 'ASC')->get();
     return view('Client.account.new_password', compact('token','cats'));
+}
+public function resetPassword(Request $req)
+{
+    // Xác thực dữ liệu nhập vào
+    $req->validate([
+        'password' => 'required|min:8|confirmed', // Xác nhận mật khẩu
+    ], [
+        'password.required' => 'Mật khẩu không được để trống',
+        'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự',
+        'password.confirmed' => 'Mật khẩu xác nhận không khớp',
+    ]);
+
+    // Lấy thông tin người dùng từ token hoặc một cách khác
+    $user = Customer::where('email', $req->email)->first(); // Giả sử có email
+
+    if ($user) {
+        // Cập nhật mật khẩu cho người dùng
+        $user->password = Hash::make($req->password);
+        $user->save();
+
+        // Đưa thông báo thành công vào session
+        return redirect()->route('login')->with('success', 'Mật khẩu đã được thay đổi thành công.');
+    } else {
+        // Thông báo lỗi nếu người dùng không tồn tại
+        return back()->with('error', 'Có lỗi xảy ra, không tìm thấy người dùng.');
+    }
 }
 }

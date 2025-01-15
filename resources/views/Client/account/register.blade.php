@@ -31,6 +31,9 @@
                             <input type="text" class="form-control" name="name" placeholder="Your Name"
                                 data-validation-required-message="Please enter your name" />
                             <p class="help-block text-danger"></p>
+                            @error('name')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div class="control-group">
                             <label for="" class="form-lable fw-bold ">Nhập email của bạn</label>
@@ -38,6 +41,9 @@
                             <input type="email" class="form-control" name="email"  placeholder="Your Email"
                                 data-validation-required-message="Please enter your email" />
                             <p class="help-block text-danger"></p>
+                            @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div class="control-group">
                             <label for="" class="form-lable fw-bold ">Nhập số điện thoại của bạn</label>
@@ -45,6 +51,9 @@
                             <input type="text" class="form-control" name="phone"  placeholder="Số điện thoại"
                                 >
                             <p class="help-block text-danger"></p>
+                            @error('phone')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div class="control-group">
                             <label for="" class="form-lable fw-bold ">Nhập đia chỉ của bạn</label>
@@ -52,6 +61,9 @@
                             <input type="text" class="form-control" name="address"  placeholder="Địa chỉ của bạn"
                                  >
                             <p class="help-block text-danger"></p>
+                            @error('address')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div class="control-group">
                             <label for="" class="form-lable fw-bold ">Giói tính</label>
@@ -67,6 +79,9 @@
                             <input type="text" class="form-control" name="password"  placeholder="Mật khẩu của bạn"
                                 data-validation-required-message="Please enter your email" />
                             <p class="help-block text-danger"></p>
+                            @error('password')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div class="control-group">
                             <label for="" class="form-lable fw-bold">Nhập lại mật khẩu của bạn</label>
@@ -74,6 +89,9 @@
                             <input type="text" class="form-control" name="confirm_password" placeholder="Nhập lại mật khẩu"
                                 data-validation-required-message="Please enter your email" />
                             <p class="help-block text-danger"></p>
+                             @error('confirm_password')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div>
                             <button class="btn btn-primary py-2 px-4" type="submit" >

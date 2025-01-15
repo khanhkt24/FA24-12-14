@@ -31,16 +31,16 @@
                     <div class="form-group">
                         <label for="password">Mật khẩu mới</label>
                         <input type="password" name="password" id="password" class="form-control" >
-                        @if ($errors->has('password'))
-                            <small class="text-danger">{{ $errors->first('password') }}</small>
-                        @endif
+                        @error('password')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                     </div>
                     <div class="form-group">
                         <label for="password_confirmation">Xác nhận mật khẩu</label>
                         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" >
-                        @if ($errors->has('password'))
-                            <small class="text-danger">{{ $errors->first('password') }}</small>
-                        @endif
+                        @error('comfirm_password')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                     </div>
                     <button type="submit" class="btn btn-primary">Cập nhật mật khẩu</button>
                 </form>

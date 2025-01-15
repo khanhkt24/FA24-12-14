@@ -24,15 +24,15 @@
         <div class="col-lg-7 mb-5">
             <div class="contact-form">
                 <div id="success"></div>
-                <form action="{{route('password.email')}}" method="post">
+                <form action="{{route('password.forgot')}}" method="post">
                     @csrf
 
                     <div class="form-group">
                         <label for="email">Email của bạn</label>
                         <input type="email" name="email" id="email" class="form-control">
-                        @if ($errors->has('email'))
-                            <small class="text-danger">{{ $errors->first('email') }}</small>
-                        @endif
+                        @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                     </div>
                     <button type="submit" class="btn btn-primary">Gửi link đặt lại mật khẩu</button>
                 </form>

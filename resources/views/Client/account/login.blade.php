@@ -30,8 +30,7 @@
                         <div class="control-group">
                             <label for="" class="form-lable fw-bold ">Nhập email của bạn</label>
 
-                            <input type="email" class="form-control" name="email"  placeholder="Your Email"
-                                data-validation-required-message="Please enter your email" />
+                            <input type="email" class="form-control" name="email"  placeholder="Your Email">
                             <p class="help-block text-danger"></p>
                             @error('email')
                             <small class="text-danger">{{ $message }}</small>
@@ -42,8 +41,7 @@
                         <div class="control-group">
                             <label for="" class="form-lable fw-bold">Nhập mật khẩu của bạn</label>
 
-                            <input type="text" class="form-control" name="password"  placeholder="Mật khẩu của bạn"
-                                data-validation-required-message="Please enter your email" />
+                            <input type="text" class="form-control" name="password"  placeholder="Mật khẩu của bạn">
                             <p class="help-block text-danger"></p>
                             @error('password')
                             <small class="text-danger">{{ $message }}</small>
